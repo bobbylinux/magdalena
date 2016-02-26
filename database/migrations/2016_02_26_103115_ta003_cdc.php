@@ -3,7 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordResetsTable extends Migration
+/*tabella dei centri di costo*/
+class Ta003Cdc extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +13,11 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token')->index();
-            $table->timestamp('created_at');
+        Schema::create('ta003_cdc', function (Blueprint $table) {
+            $table->string('c_cdc',3); 
+            $table->string('t_sed',100); 
+            //primary-key
+            $table->primary('c_cdc');
         });
     }
 
@@ -26,6 +28,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('password_resets');
+        Schema::drop('ta003_cdc');
     }
 }
