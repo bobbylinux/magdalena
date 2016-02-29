@@ -6,13 +6,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
+    /**
+     * The attributes that select the database table
+     *
+     * @var 
+     */
+    protected $table = "ta001_soci";
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+
     protected $fillable = [
-        'name', 'email', 'password',
+        't_usr', 't_pwd'
     ];
 
     /**
@@ -21,6 +30,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        't_pwd',
     ];
 }

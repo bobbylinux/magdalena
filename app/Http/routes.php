@@ -10,11 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function () {
-    return view('index');
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -29,3 +24,11 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
     //
 });
+
+
+// route to show the home page
+Route::get('/', array('uses' => 'HomeController@showHome'));
+// route to show the login form
+Route::get('login', array('uses' => 'SociController@showLogin'));
+// route to process the form
+Route::post('login', array('uses' => 'SociController@doLogin'));

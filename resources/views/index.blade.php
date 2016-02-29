@@ -1,33 +1,35 @@
 @extends('templates.front')
 @section('content')
-	<div class="container">    
+	<div class="container-fluid form-login">    
+		<div class="row text-center">
+			<i class="fa fa-users fa-5x"></i>
+		</div>
+		<div class="row text-center">
+			<h2>Accedi</h2>
+		</div>
       	<form class="form-horizontal">
-			<div class="form-group">
-				<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-				<div class="col-sm-10">
-				  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-				<div class="col-sm-10">
-				  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-				</div>
-			</div>
-			<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-			  <div class="checkbox">
-			    <label>
-			      <input type="checkbox"> Remember me
-			    </label>
-			  </div>
-			</div>
-			</div>
-		  	<div class="form-group">
-			    <div class="col-sm-offset-2 col-sm-10">
-			      <button type="submit" class="btn btn-default">Sign in</button>
-			    </div>
-  			</div>
+		  <div class="form-group">
+		    <div class="col-sm-4 col-lg-offset-4">
+		      <input type="email" class="form-control" id="username" placeholder="Username">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-4 col-lg-offset-4">
+		      <input type="password" class="form-control" id="password" placeholder="Password">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-4 col-lg-offset-4">
+		      <button type="submit" class="btn btn-success btn-block">Log in</button>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-4 col-lg-offset-4">
+		       	<label>
+		       		<a href="">Password smarrita?</a>
+				</label>
+		    </div>
+		  </div>
 		</form>
     </div>
 @stop
