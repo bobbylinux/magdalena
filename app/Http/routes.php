@@ -32,3 +32,10 @@ Route::get('/', array('uses' => 'HomeController@showHome'));
 Route::get('login', array('uses' => 'SociController@showLogin'));
 // route to process the form
 Route::post('login', array('uses' => 'SociController@doLogin'));
+
+//route resource for Soci
+Route::resource('soci', 'SociController');
+//route resource for Sedi
+Route::resource('sedi', 'SediController');
+//route resource for CDC
+Route::resource('cdc', 'CDCController');

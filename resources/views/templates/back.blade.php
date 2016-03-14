@@ -28,21 +28,21 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
+                    <a href="{!! url('/') !!}">
+                        Magdalena
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="{!! url('/') !!}">Dashboard</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+                    <a href="{!! url('/soci') !!}">Gestione Soci</a>
                 </li>
                 <li>
-                    <a href="#">Overview</a>
+                    <a href="{!! url('/sedi') !!}">Gestione Sedi</a>
                 </li>
                 <li>
-                    <a href="#">Events</a>
+                    <a href="{!! url('/cdc') !!}">Gestione Centri di Costo</a>
                 </li>
                 <li>
                     <a href="#">About</a>

@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Sede;
 
-class SociController extends Controller
+class SediController extends Controller
 {
 
-    protected $socio;
+    protected $sede;
 
     /**
      * Constructor for Dipendency Injection
@@ -19,8 +19,8 @@ class SociController extends Controller
      * @return none
      *
      */
-    public function __construct(User $socio) {
-        $this->socio = $socio;
+    public function __construct(Sede $sede) {
+        $this->sede = $sede;
     }
     /**
      * Display a listing of the resource.
@@ -29,8 +29,8 @@ class SociController extends Controller
      */
     public function index()
     {
-        $soci = $this->socio->paginate(10);
-        return view('soci.index',compact('soci'));
+        $sedi = $this->sede->paginate(10);
+        return view('sedi.index',compact("sedi"));
     }
 
     /**
@@ -40,7 +40,7 @@ class SociController extends Controller
      */
     public function create()
     {
-        //
+        return view('sedi.create');
     }
 
     /**
@@ -73,7 +73,8 @@ class SociController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sede = $this->sede->where('c_sed','=',$id)->first();
+        return view('sedi.edit',compact('sede'));
     }
 
     /**

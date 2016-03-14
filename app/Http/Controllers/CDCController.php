@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\CentroDiCosto;
 
-class SociController extends Controller
+class CDCController extends Controller
 {
 
-    protected $socio;
+
+    protected $centroDiCosto;
 
     /**
      * Constructor for Dipendency Injection
@@ -19,8 +20,8 @@ class SociController extends Controller
      * @return none
      *
      */
-    public function __construct(User $socio) {
-        $this->socio = $socio;
+    public function __construct(CentroDiCosto $centroDiCosto) {
+        $this->centroDiCosto = $centroDiCosto;
     }
     /**
      * Display a listing of the resource.
@@ -29,18 +30,18 @@ class SociController extends Controller
      */
     public function index()
     {
-        $soci = $this->socio->paginate(10);
-        return view('soci.index',compact('soci'));
+        $cdc = $this->centroDiCosto->orderby('c_cdc')->paginate(10);
+        return view('cdc.index', compact("cdc"));
     }
 
-    /**
+     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('cdc.create');
     }
 
     /**
@@ -51,7 +52,12 @@ class SociController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = array(
+            'c_cdc' => $request->c_cdc,
+            't_sed' => $request->t_sed
+        );
+
+        $this->centroDiCosto->store($data);
     }
 
     /**
@@ -73,7 +79,8 @@ class SociController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cdc = $this->centroDiCosto->where('c_cdc','=',$id)->first();
+        return view('cdc.edit',compact('cdc'));
     }
 
     /**
@@ -85,7 +92,7 @@ class SociController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
