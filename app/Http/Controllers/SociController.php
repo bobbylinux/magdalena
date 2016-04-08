@@ -29,7 +29,7 @@ class SociController extends Controller
      */
     public function index()
     {
-        $soci = $this->socio->paginate(10);
+        $soci = $this->socio->orderby("t_cgn","asc")->orderby("t_nom","asc")->paginate(10);
         return view('soci.index',compact('soci'));
     }
 
