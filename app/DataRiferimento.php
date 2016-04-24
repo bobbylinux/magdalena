@@ -46,4 +46,10 @@ class DataRiferimento extends BaseModel
     public function trash() {
         $this->delete();
     }
+
+    public function getActiveDate() {
+        $now = date('Y-m-d');
+        return $this/*->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)*/->first();
+
+    }
 }

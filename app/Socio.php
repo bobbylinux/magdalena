@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Factory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 class Socio extends BaseModel
 {
@@ -10,6 +13,48 @@ class Socio extends BaseModel
 
 
     protected $primaryKey = 'c_soc';
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+
+    protected $fillable = [
+        't_usr', 't_pwd'
+    ];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        't_pwd',
+    ];
+
+    // validate the info, create rules for the inputs
+    /**
+     * The variable for validation rules
+     *
+     */
+    protected $rules = array(
+        'username' => 'required|email', // make sure the email is an actual email
+        'password' => 'required|alphaNum|min:4' // password can only be alphanumeric and has to be greater than 3 characters
+    );
+
+    private $errors = "";
+
+    /**
+     * The function that incapsulate the error variable
+     *
+     * @errors array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 
     /**
      * The function for store in database from view
@@ -52,12 +97,30 @@ class Socio extends BaseModel
         $this->c_rif = $data['c_rif'];
         $this->save();
     }
+
     /**
      * The function for delete in database from view
      *
      * @data array
      */
-    public function trash() {
+    public function trash()
+    {
         $this->delete();
+    }
+
+    public static function randStrGen($len)
+    {
+        $result = "";
+        $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+        $charArray = str_split($chars);
+        for ($i = 0; $i < $len; $i++) {
+            $randItem = array_rand($charArray);
+            $result .= "" . $charArray[$randItem];
+        }
+        return $result;
+    }
+
+    public function getSociCandidati() {
+        return ($this->where('f_cnd','=','S')->select('t_nom','t_cgn','c_soc')->get());
     }
 }

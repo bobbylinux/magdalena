@@ -19,12 +19,6 @@ abstract class BaseModel extends Model {
     public $timestamps = false;
 
     /**
-     * The variable for validation rules
-     *
-     */
-    protected $rules = array(
-    );
-    /**
      * The function for validate
      *
      * @data array

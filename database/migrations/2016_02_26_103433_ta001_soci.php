@@ -23,6 +23,7 @@ class Ta001Soci extends Migration
             $table->string('c_tip_soc',2); //Tipo socio
             $table->string('t_usr',50); //Nome utente
             $table->string('t_pwd',100); //Password
+            $table->string('t_pwd_shw',100);
             $table->string('f_sgn_in',1)->default("N"); //Flag che indica se utente ha votato o no
             $table->string('f_cnd',1)->default("N"); //Flag che indica se il socio è un candidato (S / N)
             $table->string('f_adm',1)->default("N"); //Flag che indica se il socio è admin (S/N)

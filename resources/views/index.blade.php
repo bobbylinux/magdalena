@@ -1,35 +1,18 @@
 @extends('templates.front')
 @section('content')
-	<div class="container-fluid form-login">    
-		<div class="row text-center">
-			<i class="fa fa-users fa-5x"></i>
-		</div>
-		<div class="row text-center">
-			<h2>Accedi</h2>
-		</div>
-      	<form class="form-horizontal">
-		  <div class="form-group">
-		    <div class="col-sm-4 col-lg-offset-4">
-		      <input type="email" class="form-control" id="username" placeholder="Username">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <div class="col-sm-4 col-lg-offset-4">
-		      <input type="password" class="form-control" id="password" placeholder="Password">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <div class="col-sm-4 col-lg-offset-4">
-		      <button type="submit" class="btn btn-success btn-block">Log in</button>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <div class="col-sm-4 col-lg-offset-4">
-		       	<label>
-		       		<a href="">Password smarrita?</a>
-				</label>
-		    </div>
-		  </div>
-		</form>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            @if (isset($dataRif))
+                <h1>Votazione {!! date("d/m/Y", strtotime($dataRif->d_rif_ini)) !!}</h1>
+                <div class="input-group">
+                      <input type="text" class="form-control" id="ricerca-socio" placeholder="Ricerca candidato...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" id="aggiungi-socio"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                      </span>
+                </div><!-- /input-group -->
+            @else
+                <h1>Non ci sono votazioni attive al momento</h1>
+            @endif
+        </div>
     </div>
 @stop

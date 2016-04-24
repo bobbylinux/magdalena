@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Socio;
 
 class SociController extends Controller
 {
@@ -19,8 +20,9 @@ class SociController extends Controller
      * @return none
      *
      */
-    public function __construct(User $socio) {
+    public function __construct(Socio $socio) {
         $this->socio = $socio;
+        $this->middleware('guest', ['except' => 'logout']);
     }
     /**
      * Display a listing of the resource.
@@ -97,5 +99,13 @@ class SociController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getSociCandidati(Request $request) {
+        $result = $this->socio->getSociCandidati();
+        foreach ($result as $data) {
+            $return_array[] = array('label' => $data->t_cgn . " ". $data->t_nom, 'value' => $data->t_cgn . " ". $data->t_nom, 'id' => $data->c_soc);
+        }
+        return json_encode($return_array);
     }
 }

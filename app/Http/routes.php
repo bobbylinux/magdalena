@@ -29,9 +29,11 @@ Route::group(['middleware' => ['web']], function () {
 // route to show the home page
 Route::get('/', array('uses' => 'HomeController@showHome'));
 // route to show the login form
-Route::get('login', array('uses' => 'SociController@showLogin'));
+Route::get('login', array('uses' => 'Auth\AuthController@showLogin'));
 // route to process the form
-Route::post('login', array('uses' => 'SociController@doLogin'));
+Route::post('login', array('uses' => 'Auth\AuthController@doLogin'));
+// route to get soci candidati
+Route::get('soci/candidati','SociController@getSociCandidati');
 
 //route resource for Soci
 Route::resource('soci', 'SociController');
