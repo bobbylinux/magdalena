@@ -43,4 +43,8 @@ class CentroDiCosto extends BaseModel
     public function trash() {
         $this->delete();
     }
+
+    public function getCDCList() {
+        return $this->orderBy('t_sed')->lists('t_sed', 'c_cdc')->all();
+    }
 }

@@ -2,37 +2,38 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract,
+                                    AuthorizableContract,
+                                    CanResetPasswordContract
 {
+    use Authenticatable, Authorizable, CanResetPassword;
 
     /**
-     * The attributes that select the database table
+     * The database table used by the model.
      *
-     * @var 
+     * @var string
      */
-    protected $table = "ta001_soci";
-
-
-    protected $primaryKey = 'c_soc';
+    protected $table = 'ta001_soci';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-
-    protected $fillable = [
-        't_usr', 't_pwd'
-    ];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = [
-        't_pwd',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 }

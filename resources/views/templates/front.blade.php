@@ -12,16 +12,12 @@
     <link href="{!! url('css/ripples.min.css') !!}" rel="stylesheet">
     <link href="{!! url('css/styles.css') !!}" rel="stylesheet">
 
-    <!-- jQuery UI -->
-    <link href="{!! url('css/jquery.ui.theme.font-awesome.css') !!}" rel="stylesheet">
-
     <!-- Font-Awesome-->
     <link href="{!! url('css/font-awesome.min.css') !!}" rel="stylesheet">
 
 
     <!-- jQuery UI -->
     <link href="https://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css" rel="stylesheet">
-    <link href="{!! url('css/jquery.ui.theme.font-awesome.css') !!}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

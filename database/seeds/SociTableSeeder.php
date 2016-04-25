@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Socio;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Hash as Hash;
 use Illuminate\Contracts\Hashing\Hasher;
 
 
@@ -40,7 +41,7 @@ class SociTableSeeder extends Seeder
                     'c_sed' => $obj->c_sed,
                     'c_tip_soc' => $obj->c_tip_soc,
                     't_usr' => $username,
-                    't_pwd' =>  Hash::make($password),
+                    't_pwd' =>  bcrypt('12345678'),
                     't_pwd_shw' => $password,
                     'f_sgn_in' => $obj->f_sgn_in,
                     'f_cnd' => $obj->f_cnd,

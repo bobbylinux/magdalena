@@ -1,16 +1,20 @@
 <?php
 
 namespace App;
-
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Factory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\Validator as Validator;
+use Illuminate\Support\Facades\Hash as Hash;
+use Illuminate\Support\Facades\Mail as Mail;
 
+class Socio extends BaseModel implements AuthenticatableContract, CanResetPasswordContract {
+    use Authenticatable, CanResetPassword;
 
-class Socio extends BaseModel
-{
     protected $table = "ta001_soci";
-
 
     protected $primaryKey = 'c_soc';
 
@@ -40,8 +44,8 @@ class Socio extends BaseModel
      *
      */
     protected $rules = array(
-        'username' => 'required|email', // make sure the email is an actual email
-        'password' => 'required|alphaNum|min:4' // password can only be alphanumeric and has to be greater than 3 characters
+        't_usr' => 'required|email', // make sure the email is an actual email
+        't_pwd' => 'required|alphaNum|min:4' // password can only be alphanumeric and has to be greater than 3 characters
     );
 
     private $errors = "";

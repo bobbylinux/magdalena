@@ -30,4 +30,13 @@ class HomeController extends Controller
 		return view('index',compact("dataRif"));
 
     }
+
+
+	public function showDashboard() {
+		return view('dashboard');
+	}
+
+	public function showEsito() {
+		return view('esito');
+	}
 }

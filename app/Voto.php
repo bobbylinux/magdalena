@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sede extends BaseModel
+class Voto extends BaseModel
 {
-    protected $table = "ta002_sedi";
+    protected $table = "ts001_voti";
 
     /**
      * The function for store in database from view
@@ -15,9 +15,6 @@ class Sede extends BaseModel
      */
     public function store($data)
     {
-        $this->c_cdc = $data['c_sed'];
-        $this->t_sed = $data['t_sed'];
-        self::save();
     }
 
     /**
@@ -27,9 +24,6 @@ class Sede extends BaseModel
      */
     public function edit($data)
     {
-        $this->c_cdc = $data['c_sed'];
-        $this->t_sed = $data['t_sed'];
-        $this->save();
     }
     /**
      * The function for delete in database from view
@@ -38,10 +32,5 @@ class Sede extends BaseModel
      */
     public function trash() {
         $this->delete();
-    }
-
-
-    public function getSediList() {
-        return $this->lists('t_sed', 'c_sed')->all();
     }
 }

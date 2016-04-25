@@ -3,11 +3,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Socio;
 use App\User;
-use Illuminate\Support\Facades\Auth as Auth;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector as Redirect;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Session\SessionManager;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -105,12 +106,12 @@ class AuthController extends Controller
 
         if ($this->socio->validate($userdata)) {
             // attempt to do the login
-            if (\Auth::attempt($userdata)) {
+            if (Auth::attempt($userdata)) {
                 Session::put('utente_user', $userdata['username']);
                 Session::put('utente_id', Auth::user()->id);
                 Session::put('utente_admin', Auth::user()->f_admin);
 
-                if (Auth::user()->f_admin == "S") {
+                if ($this->auth->user()->f_admin == "S") {
                     return Redirect::to('dashboard');
                 } else {
                     return Redirect::to('/');

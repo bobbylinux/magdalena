@@ -61,6 +61,5 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{!! url('js/bootstrap.min.js') !!}"></script>
     <script src="{!! url('js/ripples.min.js') !!}"></script>
-    <script src="{!! url('js/scripts.js') !!}"></script>
   </body>
 </html>

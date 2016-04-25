@@ -52,4 +52,8 @@ class DataRiferimento extends BaseModel
         return $this/*->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)*/->first();
 
     }
+
+    public function getDateList() {
+        return $this->orderBy('d_rif_ini')->lists('d_rif_ini', 'c_rif')->all();
+    }
 }

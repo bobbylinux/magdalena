@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\CentroDiCosto;
+use App\Voto;
 
-class CDCController extends Controller
+class VotiController extends Controller
 {
 
-    protected $centroDiCosto;
+    protected $voto;
 
     /**
      * Constructor for Dipendency Injection
@@ -19,8 +20,8 @@ class CDCController extends Controller
      * @return none
      *
      */
-    public function __construct(CentroDiCosto $centroDiCosto) {
-        $this->centroDiCosto = $centroDiCosto;
+    public function __construct(Voto $voto) {
+        $this->voto = $voto;
     }
     /**
      * Display a listing of the resource.
@@ -29,18 +30,17 @@ class CDCController extends Controller
      */
     public function index()
     {
-        $cdc = $this->centroDiCosto->orderby('c_cdc')->paginate(10);
-        return view('cdc.index', compact("cdc"));
+
     }
 
-     /**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('cdc.create');
+        //
     }
 
     /**
@@ -51,12 +51,7 @@ class CDCController extends Controller
      */
     public function store(Request $request)
     {
-        $data = array(
-            'c_cdc' => $request->c_cdc,
-            't_sed' => $request->t_sed
-        );
-
-        $this->centroDiCosto->store($data);
+        return json_encode("ok");
     }
 
     /**
@@ -78,8 +73,7 @@ class CDCController extends Controller
      */
     public function edit($id)
     {
-        $cdc = $this->centroDiCosto->where('c_cdc','=',$id)->first();
-        return view('cdc.edit',compact('cdc'));
+        //
     }
 
     /**
@@ -91,7 +85,7 @@ class CDCController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //
     }
 
     /**

@@ -28,13 +28,18 @@ Route::group(['middleware' => ['web']], function () {
 
 // route to show the home page
 Route::get('/', array('uses' => 'HomeController@showHome'));
+// route to show the dash
+Route::get('/dashboard', array('uses' => 'HomeController@showDashboard'));
+// route to show the final page
+Route::get('/esito', array('uses' => 'HomeController@showEsito'));
 // route to show the login form
-Route::get('login', array('uses' => 'Auth\AuthController@showLogin'));
+Route::get('login', array('uses' => 'SociController@showLogin'));
 // route to process the form
-Route::post('login', array('uses' => 'Auth\AuthController@doLogin'));
+Route::post('login', array('uses' => 'SociController@doLogin'));
 // route to get soci candidati
 Route::get('soci/candidati','SociController@getSociCandidati');
-
+//route to save votes
+Route::post('soci/voto', array('uses' => 'VotiController@store'));
 //route resource for Soci
 Route::resource('soci', 'SociController');
 //route resource for Sedi
