@@ -1,18 +1,13 @@
 <?php
 
 namespace App;
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Validator as Validator;
 use Illuminate\Support\Facades\Hash as Hash;
 use Illuminate\Support\Facades\Mail as Mail;
 
-class Socio extends BaseModel implements AuthenticatableContract, CanResetPasswordContract {
-    use Authenticatable, CanResetPassword;
+class Socio extends BaseModel  {
 
     protected $table = "ta001_soci";
 
@@ -73,10 +68,13 @@ class Socio extends BaseModel implements AuthenticatableContract, CanResetPasswo
         $this->t_nom = $data['t_nom'];
         $this->c_sed = $data['c_sed'];
         $this->c_tip_soc = $data['c_tip_soc'];
+        $this->c_cdc = $data['c_cdc'];
         $this->t_usr = $data['t_usr'];
-        $this->t_pwd = $data['t_pwd'];
-        $this->f_sgn_in = $data['f_sgn_in'];
+        $this->t_pwd = Hash::make($data['t_pwd']);
+        $this->t_pwd_shw = ($data['t_pwd']);
+        //$this->f_sgn_in = $data['f_sgn_in'];
         $this->f_cnd = $data['f_cnd'];
+        $this->f_adm = $data['f_adm'];
         $this->c_rif = $data['c_rif'];
         self::save();
     }
@@ -94,10 +92,13 @@ class Socio extends BaseModel implements AuthenticatableContract, CanResetPasswo
         $this->t_nom = $data['t_nom'];
         $this->c_sed = $data['c_sed'];
         $this->c_tip_soc = $data['c_tip_soc'];
+        $this->c_cdc = $data['c_cdc'];
         $this->t_usr = $data['t_usr'];
-        $this->t_pwd = $data['t_pwd'];
-        $this->f_sgn_in = $data['f_sgn_in'];
+        $this->t_pwd = Hash::make($data['t_pwd']);
+        $this->t_pwd_shw = ($data['t_pwd']);
+        //$this->f_sgn_in = $data['f_sgn_in'];
         $this->f_cnd = $data['f_cnd'];
+        $this->f_adm = $data['f_adm'];
         $this->c_rif = $data['c_rif'];
         $this->save();
     }
@@ -125,6 +126,10 @@ class Socio extends BaseModel implements AuthenticatableContract, CanResetPasswo
     }
 
     public function getSociCandidati() {
-        return ($this->where('f_cnd','=','S')->select('t_nom','t_cgn','c_soc')->get());
+        return ($this->where('f_cnd','=','S')->select('t_nom','t_cgn','c_soc')->orderBy('t_cgn','asc')->orderBy('t_nom','asc')->get());
+    }
+
+    public function getSocioInfo($cod_socio) {
+        return $this->where('c_soc','=',$cod_socio)->first();
     }
 }

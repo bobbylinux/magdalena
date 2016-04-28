@@ -13,7 +13,6 @@ $(document).ready(function () {
             $candidati = data;
         })
         .error(function (data) {
-            alert("error");
         });
 
     $("#ricerca-socio").autocomplete({
@@ -35,20 +34,24 @@ $(document).ready(function () {
             html = '<div class="col-xs-8 col-xs-offset-2 text-center">';
             html += '<div class="panel panel-default">';
             html += '<div class="panel-body">';
+            html += '<button type="button" class="close delete" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
             html += '<input type="hidden" class="id-votato" value="' + id + '"/>';
             html += nome;
             html += '</div>';
             html += '</div>';
             html += '</div>';
             $("#voti-container").append(html);
-
-
-            $("#conferma-container").show();
+            $("#conferma-container").show("slow");
         }
     });
 
     $(document).on("click", "#conferma-voto", function (event) {
-        $("#conferma-messaggio").modal("show");
+        if ($(".panel").length) {
+            $("#conferma-messaggio").modal("show");
+        } else {
+            $("#errore-messaggio>.modal-body").append("<p>Selezionare almeno un candidato</p>");
+            $("#errore-messaggio").modal("show");
+        }
     });
 
     $(document).on("click","#conferma-voto-definitivo",function(event){
@@ -81,9 +84,15 @@ $(document).ready(function () {
                 $(location).attr('href',$url);
             })
             .error(function (data) {
-
                 $("#wait-msg").modal("hide");
-                alert("errore");
             });
     });
+
+    $(document).on("click",".delete",function(event) {
+        event.preventDefault();
+        $(this).closest(".panel").remove();
+        if (!$(".panel").length) {
+            $("#conferma-container").hide("slow");
+        }
+    })
 });

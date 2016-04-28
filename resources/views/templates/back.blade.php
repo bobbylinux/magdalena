@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{!! url('/') !!}">Dashboard</a>
+                    <a href="{!! url('/dashboard') !!}">Dashboard</a>
                 </li>
                 <li>
                     <a href="{!! url('/soci') !!}">Gestione Soci</a>
@@ -43,6 +43,12 @@
                 </li>
                 <li>
                     <a href="{!! url('/cdc') !!}">Gestione Centri di Costo</a>
+                </li>
+                <li>
+                    <a href="{!! url('/datariferimento') !!}">Gestione Date di riferimento</a>
+                </li>
+                <li>
+                    <a href="{!! url('/votazioni') !!}">Gestione Votazioni</a>
                 </li>
             </ul>
         </div>

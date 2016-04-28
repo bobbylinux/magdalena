@@ -35,7 +35,6 @@ class SociController extends Controller
         $this->sede = $sede;
         $this->cdc = $cdc;
         $this->data = $data;
-        $this->middleware('guest', ['except' => 'logout']);
     }
 
     /**
@@ -72,19 +71,26 @@ class SociController extends Controller
     {
         $userdata = array(
             'c_soc' => $request->get('codice-socio'),
-            'c_bdg' => $request->get('username_c'),
-            't_cgn' => $request->get('password'),
-            't_nom' => $request->get('password_c'),
-            'ruolo_utente' => Input::get('ruolo_utente'),
-            'confermato' => true
+            'c_bdg' => $request->get('codice-badge'),
+            't_cgn' => $request->get('cognome'),
+            't_nom' => $request->get('nome'),
+            'c_cdc' => $request->get('cdc'),
+            'c_sed' => $request->get('sede'),
+            'c_tip_soc' => $request->get('tipo-socio'),
+            't_usr' => $request->get('username'),
+            't_pwd' => $request->get('password'),
+            't_pwd_shw' => $request->get('password'),
+            'f_cnd' => 'S',//$request->get('candidato'),
+            'f_adm' => 'S',//$request->get('amministratore'),
+            'c_rif' => $request->get('data-riferimento')
         );
-        if ($this->utente->validate($userdata, 'Signin')) {
-            $result = $this->utente->store($userdata);
-            return Redirect::action('UtentiController@index');
-        } else {
+        //if ($this->socio->validate($userdata)) {
+            $result = $this->socio->store($userdata);
+            return Redirect::action('SociController@index');
+        /*} else {
             $errors = $this->utente->getErrors();
             return redirect()->back()->withInput(Input::except('password', 'password_c'))->withErrors($errors);
-        }
+        }*/
     }
 
     /**

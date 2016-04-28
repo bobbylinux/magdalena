@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 use App\Socio;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Hash as Hash;
 use Illuminate\Contracts\Hashing\Hasher;
 
 
-class SociTableSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +21,9 @@ class SociTableSeeder extends Seeder
 
         $json = File::get(database_path().'/data/ta001_soci.json');
         $data = json_decode($json);
-        $password = "";
+        $password = Socio::randStrGen(8);
+        $userFile = "";
+        $fileName = database_path().'/data/utenti.txt';
         foreach ($data as $obj) {
             $username = strtolower(str_replace('\'','',$obj->t_nom)).'.'.strtolower(str_replace('\'','',$obj->t_cgn));
             $username = str_replace('à','a',$username);
@@ -32,21 +35,17 @@ class SociTableSeeder extends Seeder
             $username = str_replace(' ','',$username);
             $password = Socio::randStrGen(8);
             try {
-                Socio::create(array(
+                User::create(array(
                     'c_soc' => $obj->c_soc,
-                    'c_bdg' => $obj->c_bdg,
-                    't_cgn' => $obj->t_cgn,
-                    't_nom' => $obj->t_nom,
-                    'c_cdc' => $obj->c_cdc,
-                    'c_sed' => $obj->c_sed,
-                    'c_tip_soc' => $obj->c_tip_soc,
-                    'f_sgn_in' => $obj->f_sgn_in,
-                    'f_cnd' => $obj->f_cnd,
-                    'c_rif' => $obj->c_rif
+                    'username' => $username,
+                    'password' =>  bcrypt($password),
                 ));
+                $userFile .="username => ". $username . " password => " . $password . "\r\n";
             } catch (QueryException  $e) {
                 var_dump($e->errorInfo );
             }
         }
+
+        File::put($fileName,$userFile);
     }
 }

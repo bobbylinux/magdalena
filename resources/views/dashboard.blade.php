@@ -5,7 +5,7 @@
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 				  	<div class="panel-body text-center">
-				    <i class="fa fa-user fa-5x"></i> <h1>Benvenuto Utente</h1>
+				    <i class="fa fa-user fa-5x"></i> <h1>Benvenuto {!! ucfirst(strtolower($socio ->t_nom)) !!}</h1>
 				  </div>
 				</div>
 			</div>

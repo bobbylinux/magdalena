@@ -3,40 +3,52 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DataRiferimento;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Symfony\Component\VarDumper\Cloner\Data;
+use App\DataRiferimento;
+use App\User;
+use App\Socio;
 
 class HomeController extends Controller
 {
 
-	private $dataRiferimento;
+    private $user;
+    private $socio;
+    private $dataRiferimento;
 
-	public function __construct(DataRiferimento $dataRiferimento){
-		$this->dataRiferimento = $dataRiferimento;
-	}
+    public function __construct(DataRiferimento $dataRiferimento, Socio $socio, User $user)
+    {
+        $this->dataRiferimento = $dataRiferimento;
+        $this->socio = $socio;
+        $this->user = $user;
+    }
 
-    public function showHome() {
-    	/*if (\Auth::check()) {
-    		return view('dashboard');
-		} else {
-	    	return view('users.login');
-		}*/
-		//valuto le votazioni attive
+    public function showHome()
+    {
 
-		$dataRif = $this->dataRiferimento->getActiveDate();
+        $dataRif = $this->dataRiferimento->getActiveDate();
+        $candidati = $this->socio->getSociCandidati();
+        if (Auth::check()) {
+            return view('index', compact("dataRif","candidati"));
+        } else {
+            return view('auth.login');
+        }
 
-		return view('index',compact("dataRif"));
 
     }
 
 
-	public function showDashboard() {
-		return view('dashboard');
-	}
+    public function showDashboard()
+    {
+        //devo prende le informazioni dell'utente
+        $socio = $this->socio->getSocioInfo(Auth::user()->c_soc);
+        return view('dashboard', compact('socio'));
+    }
 
-	public function showEsito() {
-		return view('esito');
-	}
+    public function showEsito()
+    {
+        return view('esito');
+    }
 }
