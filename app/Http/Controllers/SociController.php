@@ -149,40 +149,6 @@ class SociController extends Controller
         return view('users.login');
     }
 
-    /**
-     * Do the login
-     *
-     * @return Redirect
-     *
-     */
-    public function doLogin(Request $request)
-    {
-        // create our user data for the authentication
-        $userdata = array(
-            't_usr' => $request->get('username'),
-            't_pwd' => $request->get('password')
-        );
-        if ($this->socio->validate($userdata)) {
-            // attempt to do the login
-            if (Auth::attempt($userdata)) {
-                Session::put('utente_user', $userdata['username']);
-                Session::put('utente_id', Auth::user()->c_soc);
-
-                if (Auth::user()->f_admin == "S") {
-                    return Redirect::to('dashboard');
-                } else {
-                    return Redirect::to('/');
-                }
-            } else {
-                // validation not successful, send back to form
-                return Redirect::to('login')->with('errore_auth', "errore")->withInput($request->except('password'));
-            }
-        } else {
-            // validation not successful, send back to form
-            return Redirect::to('login')->with('errore_auth', "errore")->withInput($request->except('password'));
-        }
-    }
-
     public function getSociCandidati(Request $request)
     {
         $result = $this->socio->getSociCandidati();

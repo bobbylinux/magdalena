@@ -24,6 +24,7 @@
                     <button type="submit" class="btn btn-success btn-block">Log in</button>
                 </div>
             </div>
+            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
             <div class="form-group">
                 <div class="col-sm-4 col-lg-offset-4">
                     <label>

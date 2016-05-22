@@ -13,6 +13,10 @@ Route::post('/login', array('uses' => 'Auth\AuthController@postLogin'));
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
 
+Route::get('/voti', 'VotiController@index');
+//route to get ship
+Route::post('voti/dettagli/{id}', array('uses' => 'VotiController@getDettagli'));
+
 // route to get soci candidati
 Route::get('soci/candidati','SociController@getSociCandidati');
 //route to save votes
@@ -23,3 +27,5 @@ Route::resource('soci', 'SociController');
 Route::resource('sedi', 'SediController');
 //route resource for CDC
 Route::resource('cdc', 'CDCController');
+//route resource for Date Riferimento Votazioni
+Route::resource('dateriferimento', 'DateRiferimentoController');

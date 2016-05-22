@@ -7,9 +7,6 @@
             </div>
         </div>
         <div class="row">
-            {!! $sedi->links() !!}
-        </div>
-        <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <table class="table table-striped">
                     <thead>
@@ -36,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                {!! $sedi->links() !!}
+                {!! $sedi->render() !!}
             </div>
         </div>
         <div class="row">

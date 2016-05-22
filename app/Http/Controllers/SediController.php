@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Sede;
 
@@ -51,7 +52,18 @@ class SediController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = array(
+            'codice' => $request->get('codice-sede'),
+            'descrizione' => $request->get('descrizione-sede')
+        );
+
+        if (!$this->sede->validate($data)->fails()) {
+            $this->sede->store($data);
+            return Redirect::action('SediController@index');
+        } else {
+            $errors = $this->sede->getErrors();
+            return Redirect::action('SediController@create')->withInput()->withErrors($errors);
+        }
     }
 
     /**
@@ -86,7 +98,18 @@ class SediController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = array(
+            'codice' => $request->get('codice-sede'),
+            'descrizione' => $request->get('descrizione-sede')
+        );
+        if (!$this->sede->validate($data)->fails()) {
+            $sede = $this->sede->where('c_sed','=', $id)->first();
+            $sede->edit($data);
+            return Redirect::action('SediController@index');
+        } else {
+            $errors = $this->sede->getErrors();
+            return Redirect::action('SediController@edit', [$id])->withInput()->withErrors($errors);
+        }
     }
 
     /**

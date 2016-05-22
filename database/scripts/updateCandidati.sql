@@ -1,0 +1,1 @@
+update ta001_soci  set f_cnd = 'N' where (mod(cast(c_soc as int),100) = 0) and c_soc not in ('XXX','YYY');

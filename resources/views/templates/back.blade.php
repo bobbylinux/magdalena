@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="{!! url('css/bootstrap.min.css') !!}" rel="stylesheet">
-    <link href="{!! url('css/ripples.min.css') !!}" rel="stylesheet">
+    <link href="{!! url('css/custom-theme/jquery-ui-1.10.0.custom.css') !!}" rel="stylesheet">
     <link href="{!! url('css/styles.css') !!}" rel="stylesheet">
 
     <!-- Font-Awesome-->
@@ -29,7 +29,7 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="{!! url('/') !!}">
-                        Magdalena
+                        Votazioni
                     </a>
                 </li>
                 <li>
@@ -45,10 +45,13 @@
                     <a href="{!! url('/cdc') !!}">Gestione Centri di Costo</a>
                 </li>
                 <li>
-                    <a href="{!! url('/datariferimento') !!}">Gestione Date di riferimento</a>
+                    <a href="{!! url('/dateriferimento') !!}">Gestione Date di riferimento</a>
                 </li>
                 <li>
-                    <a href="{!! url('/votazioni') !!}">Gestione Votazioni</a>
+                    <a href="{!! url('/voti') !!}">Gestione Votazioni</a>
+                </li>
+                <li>
+                    <a href="{!! url('/classifica') !!}">Classifica Votazioni</a>
                 </li>
             </ul>
         </div>
@@ -64,8 +67,9 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+    <script src="{!! url('js/datepicker-it.js') !!}"></script>
     <script src="{!! url('js/bootstrap.min.js') !!}"></script>
-    <script src="{!! url('js/ripples.min.js') !!}"></script>
+    <script src="{!! url('js/scripts-back.js') !!}"></script>
   </body>
 </html>

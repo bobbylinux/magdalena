@@ -9,7 +9,6 @@
 
     <!-- Bootstrap -->
     <link href="{!! url('css/bootstrap.min.css') !!}" rel="stylesheet">
-    <link href="{!! url('css/ripples.min.css') !!}" rel="stylesheet">
     <link href="{!! url('css/styles.css') !!}" rel="stylesheet">
 
     <!-- Font-Awesome-->
@@ -44,6 +43,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
+                    @if (Auth::user()->admin == true)
+                        <li><a href="{!! url('/dashboard') !!}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                    @endif
                     <li><a href="{!! url('/logout') !!}"><i class="fa fa-sign-out"></i> Scollegati</a></li>
                 @else
                     <li><a href="{!! url('/login') !!}"><i class="fa fa-sign-in"></i> Accedi</a></li>
@@ -54,14 +56,15 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-@yield('content')
+<div class="container-fluid">
+    @yield('content')
+</div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{!! url('js/bootstrap.min.js') !!}"></script>
-<script src="{!! url('js/ripples.min.js') !!}"></script>
 <script src="{!! url('js/scripts.js') !!}"></script>
 </body>
 </html>

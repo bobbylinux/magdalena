@@ -12,10 +12,19 @@
                     <div class="form-group">
                         <input type="text" class="form-control" value ="{!! $sede['c_sed'] !!}" id="codice-sede" placeholder="Codice Sede">
                     </div>
+                    @foreach($errors->get('codice') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <div class="form-group">
                         <textarea class="form-control" id="descrizione-sede" text ="" rows="5" placeholder="Descrizione Sede">{!! $sede['t_sed'] !!}</textarea>
                     </div>
-
+                    @foreach($errors->get('descrizione') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <button type="submit" class="btn btn-success btn-block">Salva</button>
                 </form>
             </div>

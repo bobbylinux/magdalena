@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
         $userFile = "";
         $fileName = database_path().'/data/utenti.txt';
         foreach ($data as $obj) {
-            $username = strtolower(str_replace('\'','',$obj->t_nom)).'.'.strtolower(str_replace('\'','',$obj->t_cgn));
+            $username = strtolower(str_replace('\'','',$obj->t_nom)).'.'.strtolower(str_replace('\'','',$obj->t_cgn).'.'.$obj->c_bdg);
             $username = str_replace('à','a',$username);
             $username = str_replace('è','e',$username);
             $username = str_replace('é','e',$username);

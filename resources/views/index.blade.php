@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2 text-center">
             @if (isset($dataRif))
-                <h1>{!! $dataRif->t_ !!}</h1>
+                <h1>{!! $dataRif['t_des'] !!}</h1>
                 <div class="input-group">
                     <input type="text" class="form-control" id="ricerca-socio" placeholder="Ricerca candidato..."
                            data-id="">

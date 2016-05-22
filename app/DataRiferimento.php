@@ -21,6 +21,8 @@ class DataRiferimento extends BaseModel
         $this->d_rif_ini = $data['d_rif_ini'];
         $this->d_rif_fin = $data['d_rif_fin'];
         $this->t_des = $data['t_des'];
+        $this->n_vot_min = $data['n_vot_min'];
+        $this->n_vot_max = $data['n_vot_max'];
         $this->f_att = $data['f_att'];
         self::save();
     }
@@ -35,6 +37,8 @@ class DataRiferimento extends BaseModel
         $this->d_rif_ini = $data['d_rif_ini'];
         $this->d_rif_fin = $data['d_rif_fin'];
         $this->t_des = $data['t_des'];
+        $this->n_vot_min = $data['n_vot_min'];
+        $this->n_vot_max = $data['n_vot_max'];
         $this->f_att = $data['f_att'];
         $this->save();
     }

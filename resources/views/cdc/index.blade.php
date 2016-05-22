@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                {!! $cdc->links() !!}
+                {!! $cdc->render() !!}
             </div>
         </div>
         <div class="row">

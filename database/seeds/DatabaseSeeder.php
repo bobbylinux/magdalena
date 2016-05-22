@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         DB::connection()->disableQueryLog();
         Model::unguard();
 
-        DB::table('users')->delete();
+        /*DB::table('users')->delete();
         $this->command->info("tabella users pulita");
         DB::table('ta001_soci')->delete();
         $this->command->info("tabella ta001_soci pulita");
@@ -34,8 +34,10 @@ class DatabaseSeeder extends Seeder
         $this->call(DataRifTableSeeder::class);
         $this->command->info("tabella ts002_dat_rif popolata");
         $this->call(SociTableSeeder::class);
+        $this->call(SociAdministratorsTableSeeder::class);
         $this->command->info("tabella ta001_soci popolata");
-        $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);*/
+        $this->call(UsersAdministratorsTableSeeder::class);
         $this->command->info("tabella users popolata");
         Model::reguard();
     }

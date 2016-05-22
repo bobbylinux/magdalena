@@ -16,6 +16,10 @@ class SediTableSeeder extends Seeder
                 'c_sed' => 142,
                 't_sed' => 'CFT società cooperativa'
             ]);
+            DB::table('ta002_sedi')->insert([
+                'c_sed' => '838',
+                't_sed' => 'BHO'
+            ]);
         } catch (QueryException  $e) {
             var_dump($e->errorInfo);
         }

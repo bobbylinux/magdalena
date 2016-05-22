@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                {!! $soci->links() !!}
+                {!! $soci->render()  !!}
             </div>
         </div>
         <div class="row">
