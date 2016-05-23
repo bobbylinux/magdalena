@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Database\QueryException;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
@@ -120,6 +120,17 @@ class SediController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = array();
+        $return['errore'] = false;
+        $return['messaggio'] = "ok";
+        try {
+            $sede = $this->sede->where('c_sed','=',$id)->first();
+            $sede->trash();
+        } catch (QueryException $err) {
+            $return['errore'] = true;
+            $return['messaggio'] = $err->getMessage();
+        }
+
+        return json_encode($return);
     }
 }

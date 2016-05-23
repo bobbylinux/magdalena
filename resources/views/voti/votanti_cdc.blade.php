@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>CLASSIFICA {!! strtoupper($dataRif->t_des) !!} </h1>
+                <h1>VOTANTI PER CENTRO DI COSTO {!! strtoupper($dataRif->t_des) !!}</h1>
             </div>
         </div>
         <div class="row div-dettagli">
@@ -11,19 +11,21 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th class="col-lg-2">Codice Badge</th>
-                        <th class="col-lg-4">Cognome</th>
-                        <th class="col-lg-4">Nome</th>
-                        <th class="col-lg-2">Voti</th>
+                        <th class="col-lg-1">Codice</th>
+                        <th class="col-lg-8">Descrizione</th>
+                        <th class="col-lg-1">Totale</th>
+                        <th class="col-lg-1">Votanti</th>
+                        <th class="col-lg-1">Astenuti</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($classifica as $row)
+                    @foreach ($votanti as $row)
                         <tr>
-                            <td>{!! $row->c_bdg !!}</td>
-                            <td>{!! $row->t_cgn !!}</td>
-                            <td>{!! $row->t_nom !!}</td>
-                            <td>{!! $row->voti  !!}</td>
+                            <td>{!! $row->c_cdc !!}</td>
+                            <td>{!! $row->t_sed !!}</td>
+                            <td>{!! $row->totali !!}</td>
+                            <td>{!! $row->votanti !!}</td>
+                            <td>{!! $row->astenuti !!}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -32,7 +34,7 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                {!! $classifica->render()  !!}
+                {!! $votanti->render()  !!}
             </div>
         </div>
     </div>

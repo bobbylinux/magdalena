@@ -65,6 +65,6 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{!! url('js/bootstrap.min.js') !!}"></script>
-<script src="{!! url('js/scripts.js') !!}"></script>
+<script src="{!! url('js/scripts-front.js') !!}"></script>
 </body>
 </html>

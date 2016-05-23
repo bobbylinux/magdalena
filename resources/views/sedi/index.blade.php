@@ -23,7 +23,7 @@
                             <td>{!! $sede->t_sed !!}</td>
                             <td class="text-right">
                                 <a class="btn btn-primary" href="{!! url('/sedi/' . $sede->c_sed . '/edit') !!}"><i class="fa fa-pencil"></i> Modifica</a>
-                                <a class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                <a class="btn btn-danger btn-cancella" data-id="{!! $sede->c_sed !!}" data-anagrafica="sedi"><i class="fa fa-trash"></i> Cancella</a>
                             </td>
                         </tr>
                     @endforeach

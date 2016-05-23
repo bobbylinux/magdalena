@@ -68,7 +68,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Errore</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body errore-testo">
 
                 </div>
                 <div class="modal-footer">

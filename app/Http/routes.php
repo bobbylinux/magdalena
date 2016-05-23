@@ -15,12 +15,17 @@ Route::get('/logout', 'Auth\AuthController@getLogout');
 
 Route::get('/voti', 'VotiController@index');
 //route to get ship
-Route::post('voti/dettagli/{id}', array('uses' => 'VotiController@getDettagli'));
+Route::get('voti/votanti/{id}', array('uses' => 'VotiController@votanti'));
+Route::get('voti/votanti/sede/{id}', array('uses' => 'VotiController@votantiSede'));
+Route::get('voti/votanti/cdc/{id}', array('uses' => 'VotiController@votantiCDC'));
+Route::get('voti/classifica/{id}', array('uses' => 'VotiController@classifica'));
 
 // route to get soci candidati
 Route::get('soci/candidati','SociController@getSociCandidati');
 //route to save votes
 Route::post('soci/voto', array('uses' => 'VotiController@store'));
+//route to get max min votes
+Route::get('soci/voto/valida', array('uses' => 'VotiController@valida3'));
 //route resource for Soci
 Route::resource('soci', 'SociController');
 //route resource for Sedi

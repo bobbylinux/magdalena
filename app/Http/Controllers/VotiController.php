@@ -42,7 +42,7 @@ class VotiController extends Controller
      */
     public function index()
     {
-        $dataRif = $this->dataRiferimento->get();
+        $dataRif = $this->dataRiferimento->paginate(10);
         return view('voti.index', compact("dataRif"));
     }
 
@@ -84,116 +84,47 @@ class VotiController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function valida(Request $request) {
+        $result = array();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function getDettagli($id) {
-        $tabella = "";
-
-        $tabella .= $this->getClassifica($id) . $this->getVotantiPerCDC($id);
-        return json_encode($tabella);
-    }
-
-    public function getClassifica($id)
-    {
-        if ($id > 0) {
-
-            $classifica = $this->voto->getClassifica($id);
-
-            $tabella = '<div class="row div-dettagli"><h3 class="text-center">Classifica</h3>';
-            $tabella .= '<div class="col-lg-8 col-lg-offset-2">';
-            $tabella .= '<table class="table table-striped"><thead><tr><th class="col-lg-2">Codice Badge</th><th class="col-lg-4">Cognome</th><th class="col-lg-4">Nome</th><th class="col-lg-2">Voti</th></tr></thead><tbody>';
-            foreach ($classifica as $row) {
-                $tabella .= '<tr><td>' . $row->c_bdg . '</td><td>' . $row->t_cgn . '</td><td>' . $row->t_nom . '</td><td>' . $row->voti . '</td></tr>';
-            }
-            $tabella .= '</tbody></table></div></div>';
-
-            return ($tabella);
+        if (count($request->voti) == $this->dataRiferimento->getActiveDate()->n_vot_max) {
+            $result['errore'] = true;
+            $result['messaggio'] = "Al massimo possono essere scelte " . count($request->voti) . " preferenze";
         } else {
-            return (null);
+            $result['errore'] = false;
+            $result['messaggio'] = "ok";
         }
+
+        return json_encode($result);
     }
 
-    public function getVotantiPerCDC($id) {
-        if ($id > 0) {
-
-            $votanti = $this->voto->getVotantiPerCDC($id);
-
-            $tabella = '<div class="row div-dettagli"><h3 class="text-center">Votanti per CDC</h3>';
-            $tabella .= '<div class="col-lg-8 col-lg-offset-2">';
-            $tabella .= '<table class="table table-striped"><thead><tr><th class="col-lg-2">Codice CDC</th><th class="col-lg-8">Descrizione</th><th class="col-lg-2">Votanti</th></tr></thead><tbody>';
-            foreach ($votanti as $row) {
-                $tabella .= '<tr><td>' . $row->c_cdc . '</td><td>' . $row->t_sed . '</td><td>' . $row->votanti . '</td></tr>';
-            }
-            $tabella .= '</tbody></table></div></div>';
-
-            return ($tabella);
-
-        } else {
-            return (null);
-        }
+    public function votanti($id)
+    {
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $votanti = $this->voto->getVotanti($id);
+        return view('voti.votanti', compact("votanti","dataRif"));
     }
 
-    public function getAstenutiPerCDC($id) {
-        if ($id > 0) {
-
-            $votanti = $this->voto->getAstenutiPerCDC($id);
-
-            $tabella = '<div class="row div-dettagli"><h3 class="text-center">Astenuti per CDC</h3>';
-            $tabella .= '<div class="col-lg-8 col-lg-offset-2">';
-            $tabella .= '<table class="table table-striped"><thead><tr><th class="col-lg-2">Codice CDC</th><th class="col-lg-8">Descrizione</th><th class="col-lg-2">Astenuti</th></tr></thead><tbody>';
-            foreach ($votanti as $row) {
-                $tabella .= '<tr><td>' . $row->c_cdc . '</td><td>' . $row->t_sed . '</td><td>' . $row->astenuti . '</td></tr>';
-            }
-            $tabella .= '</tbody></table></div></div>';
-
-            return ($tabella);
-
-        } else {
-            return (null);
-        }
+    public function votantiSede($id)
+    {
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $votanti = $this->voto->getVotantiPerSede($id);
+        return view('voti.votanti_sede', compact("votanti","dataRif"));
     }
+
+    public function votantiCDC($id)
+    {
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $votanti = $this->voto->getVotantiPerCDC($id);
+        return view('voti.votanti_cdc', compact("votanti","dataRif"));
+    }
+
+    public function classifica($id)
+    {
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $classifica = $this->voto->getClassifica($id);
+        return view('voti.classifica', compact("classifica","dataRif"));
+    }
+
 
 }
