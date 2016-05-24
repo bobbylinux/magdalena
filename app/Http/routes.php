@@ -25,7 +25,7 @@ Route::get('soci/candidati','SociController@getSociCandidati');
 //route to save votes
 Route::post('soci/voto', array('uses' => 'VotiController@store'));
 //route to get max min votes
-Route::get('soci/voto/valida', array('uses' => 'VotiController@valida3'));
+Route::get('soci/voto/valida', array('uses' => 'VotiController@valida'));
 //route resource for Soci
 Route::resource('soci', 'SociController');
 //route resource for Sedi

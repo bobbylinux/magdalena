@@ -20,9 +20,6 @@ class Ta001Soci extends Migration
             $table->string('t_nom',100); //Nome Socio
             $table->string('c_cdc',10); //Codice Centro di Costo
             $table->string('c_sed',10); //Codice Sede
-            $table->string('c_tip_soc',2); //Tipo socio
-            $table->string('f_sgn_in',1)->default("N"); //Flag che indica se utente ha votato o no
-            $table->string('f_cnd',1)->default("N"); //Flag che indica se il socio è un candidato (S / N)
             $table->integer('c_rif')->unsigned(); //codice data di rifermento in cui si svolge la votazione
             //primary-key
             $table->primary('c_soc');

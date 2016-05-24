@@ -20,30 +20,29 @@ class Socio extends BaseModel  {
      * @var array
      */
 
-    protected $fillable = [
-        't_usr', 't_pwd'
-    ];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        't_pwd',
-    ];
-
     // validate the info, create rules for the inputs
     /**
      * The variable for validation rules
      *
      */
     protected $rules = array(
-        't_usr' => 'required|email', // make sure the email is an actual email
-        't_pwd' => 'required|alphaNum|min:4' // password can only be alphanumeric and has to be greater than 3 characters
+        'codice_socio' => 'required|unique:ta001_soci,c_soc|min:1|max:16',
+        'codice_badge' => 'required|unique:ta001_soci,c_bdg|min:1|max:16',
+        'cognome' => 'required|min:2|max:128',
+        'nome' => 'required|min:1|max:128',
+        'codice_sede' => 'required|exists:ta002_sedi,c_sed',
+        'codice_cdc' => 'required|exists:ta003_cdc,c_cdc',
+        'username' => 'required|unique:users|min:5|max:128',
+        'password' => 'required|min:8|max:64',
+        'conferma_password' => 'required|same:password',
+        'codice_socio' => 'required|unique:users,c_soc|exists:ta001_soci,c_soc'
     );
 
-    private $errors = "";
+    /**
+     * The variable for validation rules
+     *
+     */
+    protected $errors = "";
 
     /**
      * The function that incapsulate the error variable
@@ -55,6 +54,7 @@ class Socio extends BaseModel  {
         return $this->errors;
     }
 
+
     /**
      * The function for store in database from view
      *
@@ -62,20 +62,12 @@ class Socio extends BaseModel  {
      */
     public function store($data)
     {
-        $this->c_soc = $data['c_soc'];
-        $this->c_bdg = $data['c_bdg'];
-        $this->t_cgn = $data['t_cgn'];
-        $this->t_nom = $data['t_nom'];
-        $this->c_sed = $data['c_sed'];
-        $this->c_tip_soc = $data['c_tip_soc'];
-        $this->c_cdc = $data['c_cdc'];
-        $this->t_usr = $data['t_usr'];
-        $this->t_pwd = Hash::make($data['t_pwd']);
-        $this->t_pwd_shw = ($data['t_pwd']);
-        //$this->f_sgn_in = $data['f_sgn_in'];
-        $this->f_cnd = $data['f_cnd'];
-        $this->f_adm = $data['f_adm'];
-        $this->c_rif = $data['c_rif'];
+        $this->c_soc = $data['codice_socio'];
+        $this->c_bdg = $data['codice_badge'];
+        $this->t_cgn = $data['cognome'];
+        $this->t_nom = $data['nome'];
+        $this->c_sed = $data['codice_sede'];
+        $this->c_cdc = $data['codice_cdc'];
         self::save();
     }
 
@@ -86,20 +78,12 @@ class Socio extends BaseModel  {
      */
     public function edit($data)
     {
-        $this->c_soc = $data['c_soc'];
-        $this->c_bdg = $data['c_bdg'];
-        $this->t_cgn = $data['t_cgn'];
-        $this->t_nom = $data['t_nom'];
-        $this->c_sed = $data['c_sed'];
-        $this->c_tip_soc = $data['c_tip_soc'];
-        $this->c_cdc = $data['c_cdc'];
-        $this->t_usr = $data['t_usr'];
-        $this->t_pwd = Hash::make($data['t_pwd']);
-        $this->t_pwd_shw = ($data['t_pwd']);
-        //$this->f_sgn_in = $data['f_sgn_in'];
-        $this->f_cnd = $data['f_cnd'];
-        $this->f_adm = $data['f_adm'];
-        $this->c_rif = $data['c_rif'];
+        $this->c_soc = $data['codice_socio'];
+        $this->c_bdg = $data['codice_badge'];
+        $this->t_cgn = $data['cognome'];
+        $this->t_nom = $data['nome'];
+        $this->c_sed = $data['codice_sede'];
+        $this->c_cdc = $data['codice_cdc'];
         $this->save();
     }
 
@@ -126,7 +110,7 @@ class Socio extends BaseModel  {
     }
 
     public function getSociCandidati() {
-        return ($this->where('f_cnd','=','S')->select('t_nom','t_cgn','c_soc')->orderBy('t_cgn','asc')->orderBy('t_nom','asc')->get());
+        return ($this->join('ts004_candidati','ts004_candidati.c_soc','=','ta001_soci.c_soc')->select('ta001_soci.t_nom','ta001_soci.t_cgn','ta001_soci.c_soc')->orderBy('t_cgn','asc')->orderBy('t_nom','asc')->get());
     }
 
     public function getSocioInfo($cod_socio) {

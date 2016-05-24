@@ -24,7 +24,7 @@
                             <td>{!! $socio->t_cgn !!}</td>
                             <td>{!! $socio->t_nom !!}</td>
                             <td class="text-right">
-                                <a class="btn btn-primary" href="{!! url('/soci/' . $socio->c_sed . '/edit') !!}"><i class="fa fa-pencil"></i> Modifica</a>
+                                <a class="btn btn-primary" href="{!! url('/soci/' . $socio->c_soc . '/edit') !!}"><i class="fa fa-pencil"></i> Modifica</a>
                                 <a class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
                             </td>
                         </tr>

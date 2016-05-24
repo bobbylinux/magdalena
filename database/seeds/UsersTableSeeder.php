@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
                 User::create(array(
                     'c_soc' => $obj->c_soc,
                     'username' => $username,
-                    'password' =>  bcrypt($password),
+                    'password' =>  bcrypt($password)
                 ));
                 $userFile .="username => ". $username . " password => " . $password . "\r\n";
             } catch (QueryException  $e) {

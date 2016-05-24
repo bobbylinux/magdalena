@@ -29,8 +29,6 @@ class SociTableSeeder extends Seeder
             $username = str_replace('ì','i',$username);
             $username = str_replace('ò','o',$username);
             $username = str_replace('ù','u',$username);
-            $username = str_replace(' ','',$username);
-            $password = Socio::randStrGen(8);
             try {
                 Socio::create(array(
                     'c_soc' => $obj->c_soc,
@@ -38,11 +36,7 @@ class SociTableSeeder extends Seeder
                     't_cgn' => $obj->t_cgn,
                     't_nom' => $obj->t_nom,
                     'c_cdc' => $obj->c_cdc,
-                    'c_sed' => $obj->c_sed,
-                    'c_tip_soc' => $obj->c_tip_soc,
-                    'f_sgn_in' => $obj->f_sgn_in,
-                    'f_cnd' => $obj->f_cnd,
-                    'c_rif' => $obj->c_rif
+                    'c_sed' => $obj->c_sed
                 ));
             } catch (QueryException  $e) {
                 var_dump($e->errorInfo );

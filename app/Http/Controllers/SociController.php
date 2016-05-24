@@ -15,23 +15,27 @@ use App\CentroDiCosto;
 use App\DataRiferimento;
 use App\Http\Controllers\Controller;
 use App\Socio;
+use App\User;
 
 class SociController extends Controller
 {
 
     protected $socio;
+    protected $user;
     protected $sede;
     protected $cdc;
     protected $data;
+
     /**
      * Constructor for Dipendency Injection
      *
      * @return none
      *
      */
-    public function __construct(Socio $socio, Sede $sede, CentroDiCosto $cdc, DataRiferimento $data)
+    public function __construct(Socio $socio, User $user, Sede $sede, CentroDiCosto $cdc, DataRiferimento $data)
     {
         $this->socio = $socio;
+        $this->user = $user;
         $this->sede = $sede;
         $this->cdc = $cdc;
         $this->data = $data;
@@ -58,7 +62,7 @@ class SociController extends Controller
         $sedi = $this->sede->getSediList();
         $cdc = $this->cdc->getCDCList();
         $data = $this->data->getDateList();
-        return view('soci.create',compact("sedi","cdc","data"));
+        return view('soci.create', compact("sedi", "cdc", "data"));
     }
 
     /**
@@ -69,28 +73,33 @@ class SociController extends Controller
      */
     public function store(Request $request)
     {
-        $userdata = array(
-            'c_soc' => $request->get('codice-socio'),
-            'c_bdg' => $request->get('codice-badge'),
-            't_cgn' => $request->get('cognome'),
-            't_nom' => $request->get('nome'),
-            'c_cdc' => $request->get('cdc'),
-            'c_sed' => $request->get('sede'),
-            'c_tip_soc' => $request->get('tipo-socio'),
-            't_usr' => $request->get('username'),
-            't_pwd' => $request->get('password'),
-            't_pwd_shw' => $request->get('password'),
-            'f_cnd' => 'S',//$request->get('candidato'),
-            'f_adm' => 'S',//$request->get('amministratore'),
-            'c_rif' => $request->get('data-riferimento')
+        if (isset($request->admin)) {
+            $admin = true;
+        } else {
+            $admin = false;
+        }
+        $data = array(
+            'codice_socio' => $request->get('codice_socio'),
+            'codice_badge' => $request->get('codice-badge'),
+            'cognome' => $request->get('cognome'),
+            'nome' => $request->get('nome'),
+            'codice_cdc' => $request->get('cdc'),
+            'codice_sede' => $request->get('sede'),
+            'username' => $request->get('username'),
+            'password' => $request->get('password'),
+            'conferma_password' => $request->get('conferma-password'),
+            'codice_socio' => $request->get('codice-socio'),
+            'admin' => $admin
         );
-        //if ($this->socio->validate($userdata)) {
-            $result = $this->socio->store($userdata);
+
+
+        if (!$this->socio->validate($data)->fails()) {
+            $this->socio->store($data);
+            $this->user->store($data);
             return Redirect::action('SociController@index');
-        /*} else {
-            $errors = $this->utente->getErrors();
-            return redirect()->back()->withInput(Input::except('password', 'password_c'))->withErrors($errors);
-        }*/
+        }
+
+        return Redirect::action('SociController@create')->withInput()->withErrors($this->socio->getErrors());
     }
 
     /**
@@ -112,7 +121,12 @@ class SociController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->user->where('c_soc', '=', $id)->first();
+        $socio = $this->socio->where('c_soc', '=', $id)->first();
+        $sedi = $this->sede->getSediList();
+        $cdc = $this->cdc->getCDCList();
+        $data = $this->data->getDateList();
+        return view('soci.edit', compact("socio", "user", "sedi", "cdc", "data"));
     }
 
     /**
