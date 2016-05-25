@@ -47,26 +47,29 @@ class DateRiferimentoController extends Controller
      */
     public function store(Request $request)
     {
-        $abilitato = 'N';
+        $attivo = 'N';
 
-        if (isset($request->abilitato)) {
-            $abilitato = 'S';
+        if (isset($request->attivo)) {
+            $attivo = 'S';
         }
 
         $dataInizio = date('Y-m-d', strtotime(str_replace('/', '-', $request->get('data-inizio'))));
         $dataFine = date('Y-m-d', strtotime(str_replace('/', '-', $request->get('data-fine'))));
-        $userdata = array(
-            'd_rif_ini' => $dataInizio,
-            'd_rif_fin' => $dataFine,
-            't_des' => $request->get('descrizione'),
-            'n_vot_min' => $request->get('min-voti'),
-            'n_vot_max' => $request->get('max-voti'),
-            'f_att' => $abilitato
+        $data = array(
+            'data_inizio' => $dataInizio,
+            'data_fine' => $dataFine,
+            'descrizione' => $request->get('descrizione'),
+            'numero_voti_minimo' => $request->get('min-voti'),
+            'numero_voti_massimo' => $request->get('max-voti'),
+            'attivo' => $attivo
         );
-
-        $this->dataRiferimento->store($userdata);
-
-        return Redirect::action('DateRiferimentoController@index');
+        if (!$this->dataRiferimento->validate($data)->fails()) {
+            $this->dataRiferimento->store($data);
+            return Redirect::action('DateRiferimentoController@index');
+        } else {
+            $errors = $this->dataRiferimento->getErrors();
+            return Redirect::action('DateRiferimentoController@create')->withInput()->withErrors($errors);
+        }
     }
 
     /**

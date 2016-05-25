@@ -11,7 +11,7 @@
                 <form class="form" action="{!! url('/sedi/'.$sede['c_sed']) !!}" method="POST">
                     <input name="_method" type="hidden" value="PUT">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                    <div class="form-group">
+                    <div class="form-group" style="display: none">
                         <input type="text" class="form-control" value ="{!! $sede['c_sed'] !!}" id="codice-sede" name="codice-sede" placeholder="Codice Sede">
                     </div>
                     @foreach($errors->get('codice') as $message)

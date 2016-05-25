@@ -20,7 +20,7 @@ $(document).ready( function() {
         $("#wait-msg").modal("show");
         var $id = $(this).data("id");
         var $anagrafica = $(this).data("anagrafica");
-        var $url = $anagrafica+"/"+$id;
+        var $url = window.location.protocol + "//" + window.location.host + "/" + $anagrafica+"/"+$id;
         var $token = $(this).data("token");
         // process the form
         $.ajax({

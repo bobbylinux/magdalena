@@ -13,12 +13,21 @@
                     <input type="text" class="form-control" id="username" name="username" placeholder="Username">
                 </div>
             </div>
-
+            @foreach($errors->get('username') as $message)
+                <div class="form-group">
+                    <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                </div>
+            @endforeach
             <div class="form-group">
                 <div class="col-sm-4 col-lg-offset-4">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
             </div>
+            @foreach($errors->get('password') as $message)
+                <div class="form-group">
+                    <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                </div>
+            @endforeach
             <div class="form-group">
                 <div class="col-sm-4 col-lg-offset-4">
                     <button type="submit" class="btn btn-success btn-block">Log in</button>

@@ -8,6 +8,19 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
+                <form class="form" action="{!! url('/cdc/search') !!}" method="GET">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ricerca-cdc" name="ricerca-cdc" placeholder="Ricerca Centro di Costo...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit" id="brn-ricerca-cdc"><span
+                                    class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                      </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -23,7 +36,7 @@
                             <td>{!! $centroDiCosto->t_sed !!}</td>
                             <td class="text-right">
                                 <a class="btn btn-primary" href="{!! url('/cdc/' . $centroDiCosto->c_cdc . '/edit') !!}"><i class="fa fa-pencil"></i> Modifica</a>
-                                <a class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                <a class="btn btn-danger btn-cancella" data-id="{!! $centroDiCosto->c_cdc !!}" data-anagrafica="cdc"><i class="fa fa-trash"></i> Cancella</a>
                             </td>
                         </tr>
                         @endforeach

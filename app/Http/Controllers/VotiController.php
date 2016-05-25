@@ -126,5 +126,13 @@ class VotiController extends Controller
         return view('voti.classifica', compact("classifica","dataRif"));
     }
 
+    public function searchVotantiCDC(Request $request)
+    {
+        $id = $request->get('c_rif');
+        $key = "%".strtolower(trim($request->get('ricerca-cdc')))."%";
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $votanti = $this->voto->searchVotantiPerCDC($id, $key);
+        return view('voti.votanti_cdc', compact("votanti","dataRif"));
+    }
 
 }

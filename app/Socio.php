@@ -25,7 +25,7 @@ class Socio extends BaseModel  {
      * The variable for validation rules
      *
      */
-    protected $rules = array(
+    public $rulesStore = array(
         'codice_socio' => 'required|unique:ta001_soci,c_soc|min:1|max:16',
         'codice_badge' => 'required|unique:ta001_soci,c_bdg|min:1|max:16',
         'cognome' => 'required|min:2|max:128',
@@ -34,8 +34,14 @@ class Socio extends BaseModel  {
         'codice_cdc' => 'required|exists:ta003_cdc,c_cdc',
         'username' => 'required|unique:users|min:5|max:128',
         'password' => 'required|min:8|max:64',
-        'conferma_password' => 'required|same:password',
-        'codice_socio' => 'required|unique:users,c_soc|exists:ta001_soci,c_soc'
+        'conferma_password' => 'required|same:password'
+    );
+
+    public $rulesUpdate = array(
+        'cognome' => 'required|min:2|max:128',
+        'nome' => 'required|min:1|max:128',
+        'codice_sede' => 'required|exists:ta002_sedi,c_sed',
+        'codice_cdc' => 'required|exists:ta003_cdc,c_cdc'
     );
 
     /**

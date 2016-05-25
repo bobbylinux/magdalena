@@ -33,16 +33,22 @@
                 </a>
             </li>
             <li>
-                <a href="{!! url('/soci') !!}"><i class="fa fa-users"></i> Gestione Soci</a>
+                <a href="{!! url('/password') !!}"><i class="fa fa-key"></i> Cambio Password</a>
             </li>
             <li>
-                <a href="{!! url('/sedi') !!}"><i class="fa fa-truck"></i> Gestione Sedi</a>
+                <a href="{!! url('/candidati') !!}"><i class="fa fa-map-o"></i> Gestione Candidati</a>
             </li>
             <li>
                 <a href="{!! url('/cdc') !!}"><i class="fa fa-money"></i> Gestione Centri di Costo</a>
             </li>
             <li>
                 <a href="{!! url('/dateriferimento') !!}"><i class="fa fa-calendar"></i> Gestione Date di riferimento</a>
+            </li>
+            <li>
+                <a href="{!! url('/sedi') !!}"><i class="fa fa-truck"></i> Gestione Sedi</a>
+            </li>
+            <li>
+                <a href="{!! url('/soci') !!}"><i class="fa fa-users"></i> Gestione Soci/Utenti</a>
             </li>
             <li>
                 <a href="{!! url('/voti') !!}"><i class="fa fa-pencil"></i> Statistiche Votazioni</a>

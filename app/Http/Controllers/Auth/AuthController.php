@@ -108,7 +108,7 @@ class AuthController extends Controller
                 'msg' => $this->getFailedLoginMessage()));
         } else {
             return redirect('/login')->withErrors([
-                'email' => $this->getFailedLoginMessage()
+                'username' => $this->getFailedLoginMessage()
             ]);
         }
     }

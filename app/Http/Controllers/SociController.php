@@ -73,13 +73,13 @@ class SociController extends Controller
      */
     public function store(Request $request)
     {
-        if (isset($request->admin)) {
+        if (isset($request->amministratore)) {
             $admin = true;
         } else {
             $admin = false;
         }
         $data = array(
-            'codice_socio' => $request->get('codice_socio'),
+            'codice_socio' => $request->get('codice-socio'),
             'codice_badge' => $request->get('codice-badge'),
             'cognome' => $request->get('cognome'),
             'nome' => $request->get('nome'),
@@ -88,12 +88,11 @@ class SociController extends Controller
             'username' => $request->get('username'),
             'password' => $request->get('password'),
             'conferma_password' => $request->get('conferma-password'),
-            'codice_socio' => $request->get('codice-socio'),
             'admin' => $admin
         );
 
 
-        if (!$this->socio->validate($data)->fails()) {
+        if (!$this->socio->validate($data,$this->socio->rulesStore)->fails()) {
             $this->socio->store($data);
             $this->user->store($data);
             return Redirect::action('SociController@index');
@@ -138,7 +137,40 @@ class SociController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (isset($request->amministratore)) {
+            $admin = true;
+        } else {
+            $admin = false;
+        }
+        $data = array(
+            'codice_socio' => $request->get('codice-socio'),
+            'codice_badge' => $request->get('codice-badge'),
+            'cognome' => $request->get('cognome'),
+            'nome' => $request->get('nome'),
+            'codice_cdc' => $request->get('cdc'),
+            'codice_sede' => $request->get('sede'),
+            'username' => $request->get('username'),
+            'password' => $request->get('password'),
+            'conferma_password' => $request->get('conferma-password'),
+            'admin' => $admin
+        );
+
+        $user = $this->user->where('c_soc','=',$id)->first();
+        $socio = $this->socio->where('c_soc','=', $id)->first();
+
+        $this->socio->rulesUpdate["username"] =  'required|unique:users,username,'.$user->id.'|min:5|max:128';
+        $this->socio->rulesUpdate["codice_socio"] =  'required|unique:ta001_soci,c_soc,'.$socio->c_soc.',c_soc|min:1|max:16';
+        $this->socio->rulesUpdate["codice_badge"] =  'required|unique:ta001_soci,c_bdg,'.$socio->c_soc.',c_soc|min:1|max:16';
+
+        if (!$this->socio->validate($data,$this->socio->rulesUpdate)->fails()) {
+            $user->edit($data);
+            $socio->edit($data);
+            return Redirect::action('SociController@index');
+
+        }
+
+
+        return Redirect::action('SociController@edit', [$id])->withInput()->withErrors($this->socio->getErrors());
     }
 
     /**
@@ -171,5 +203,11 @@ class SociController extends Controller
             $return_array[] = array('label' => $data->t_cgn . " " . $data->t_nom, 'value' => $data->t_cgn . " " . $data->t_nom, 'id' => $data->c_soc);
         }
         return json_encode($return_array);
+    }
+
+    public function searchSocio(Request $request) {
+        $key = '%'.trim(strtolower($request->get('ricerca-socio'))).'%';
+        $soci = $this->socio->where('c_bdg','ilike', $key)->orWhere('t_cgn','ilike', $key)->orWhere('t_nom','ilike', $key)->orderby("t_cgn", "asc")->orderby("t_nom", "asc")->paginate(10);
+        return view('soci.index', compact('soci'));
     }
 }

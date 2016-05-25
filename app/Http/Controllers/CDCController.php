@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Database\QueryException;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use App\CentroDiCosto;
 
 class CDCController extends Controller
@@ -52,11 +53,16 @@ class CDCController extends Controller
     public function store(Request $request)
     {
         $data = array(
-            'c_cdc' => $request->c_cdc,
-            't_sed' => $request->t_sed
+            'codice' => $request->get('codice-cdc'),
+            'descrizione' => $request->get('descrizione-cdc')
         );
-
-        $this->centroDiCosto->store($data);
+        if (!$this->centroDiCosto->validate($data,$this->centroDiCosto->rulesSave)->fails()) {
+            $this->centroDiCosto->store($data);
+            return Redirect::action('CDCController@index');
+        } else {
+            $errors = $this->centroDiCosto->getErrors();
+            return Redirect::action('CDCController@create')->withInput()->withErrors($errors);
+        }
     }
 
     /**
@@ -91,7 +97,22 @@ class CDCController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = array(
+            'codice' => $request->get('codice-cdc'),
+            'descrizione' => $request->get('descrizione-cdc')
+        );
 
+        $centroDiCosto = $this->centroDiCosto->where('c_cdc','=', $id)->first();
+
+        $this->centroDiCosto->rulesUpdate['codice'] = 'required|unique:ta003_cdc,c_cdc,'.$centroDiCosto->c_cdc.',c_cdc|min:1|max:3';
+
+        if (!$this->centroDiCosto->validate($data,$this->centroDiCosto->rulesUpdate )->fails()) {
+            $centroDiCosto->edit($data);
+            return Redirect::action('CDCController@index');
+        } else {
+            $errors = $this->centroDiCosto->getErrors();
+            return Redirect::action('CDCController@edit', [$id])->withInput()->withErrors($errors);
+        }
     }
 
     /**
@@ -102,6 +123,23 @@ class CDCController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = array();
+        $return['errore'] = false;
+        $return['messaggio'] = "ok";
+        try {
+            $cdc = $this->centroDiCosto->where('c_cdc','=',$id)->first();
+            $cdc->trash();
+        } catch (QueryException $err) {
+            $return['errore'] = true;
+            $return['messaggio'] = $err->getMessage();
+        }
+
+        return json_encode($return);
+    }
+
+    public function searchCDC(Request $request) {
+        $key = '%'.trim(strtolower($request->get('ricerca-cdc'))).'%';
+        $cdc = $this->centroDiCosto->where('c_cdc','ilike', $key)->orWhere('t_sed','ilike', $key)->orderby("c_cdc", "asc")->orderby("t_sed", "asc")->paginate(10);
+        return view('cdc.index', compact('cdc'));
     }
 }

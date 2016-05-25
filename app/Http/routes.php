@@ -14,12 +14,19 @@ Route::get('/login', 'Auth\AuthController@getLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
 
 Route::get('/voti', 'VotiController@index');
-//route to get ship
-Route::get('voti/votanti/{id}', array('uses' => 'VotiController@votanti'));
-Route::get('voti/votanti/sede/{id}', array('uses' => 'VotiController@votantiSede'));
-Route::get('voti/votanti/cdc/{id}', array('uses' => 'VotiController@votantiCDC'));
-Route::get('voti/classifica/{id}', array('uses' => 'VotiController@classifica'));
 
+//route to get ship
+
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('voti/votanti/{id}', array('uses' => 'VotiController@votanti'));
+    Route::get('voti/votanti/sede/{id}', array('uses' => 'VotiController@votantiSede'));
+    Route::get('voti/votanti/cdc/{id}', array('uses' => 'VotiController@votantiCDC'));
+    Route::get('voti/classifica/{id}', array('uses' => 'VotiController@classifica'));
+});
+
+Route::get('soci/search','SociController@searchSocio');
+Route::get('cdc/search','CDCController@searchCDC');
+Route::get('voti/votanti_cdc/search','VotiController@searchVotantiCDC');
 // route to get soci candidati
 Route::get('soci/candidati','SociController@getSociCandidati');
 //route to save votes

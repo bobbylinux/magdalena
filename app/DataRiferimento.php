@@ -12,6 +12,33 @@ class DataRiferimento extends BaseModel
     protected $primaryKey = 'c_rif';
 
     /**
+     * The variable for validation rules
+     *
+     */
+    public $rules = array(
+        'data_inizio' => 'required|date|before:data_fine|after:yesterday',
+        'data_fine' => 'required|date|after:data_inizio',
+        'descrizione' => 'required|min:10|max:100',
+        'numero_voti_minimo' => 'required|integer|min:1|max:100|lesser_than_field:numero_voti_massimo',
+        'numero_voti_massimo' => 'required|integer|min:1|max:100|greater_than_field:numero_voti_minimo',
+    );
+
+    /**
+     * The variable for validation rules
+     *
+     */
+    protected $errors = "";
+
+    /**
+     * The function that incapsulate the error variable
+     *
+     * @errors array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+    /**
      * The function for store in database from view
      *
      * @data array
@@ -53,7 +80,7 @@ class DataRiferimento extends BaseModel
 
     public function getActiveDate() {
         $now = date('Y-m-d');
-        return $this/*->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)*/->first();
+        return $this->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)->first();
 
     }
 

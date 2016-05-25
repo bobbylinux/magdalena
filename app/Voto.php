@@ -47,4 +47,8 @@ class Voto extends BaseModel
     public function getVotantiPerSede($dataRif) {
         return DB::table('ta001_soci')->join('ta002_sedi', 'ta002_sedi.c_sed', '=', 'ta001_soci.c_sed')->leftJoin('ts001_voti','ts001_voti.c_soc','=','ta001_soci.c_soc')->groupby("ta002_sedi.c_sed","ta002_sedi.t_sed")->select(array("ta002_sedi.c_sed","ta002_sedi.t_sed",DB::raw('count(distinct ta001_soci.c_soc) as totali'),DB::raw('getVotantiPerSede('.$dataRif.',ta002_sedi.c_sed) as votanti'),DB::raw('getAstenutiPerSede('.$dataRif.',ta002_sedi.c_sed) as astenuti')))->orderby("ta002_sedi.t_sed")->paginate(10);
     }
+
+    public function searchVotantiPerCDC($dataRif, $key) {
+        return DB::table('ta001_soci')->join('ta003_cdc', 'ta003_cdc.c_cdc', '=', 'ta001_soci.c_cdc')->leftJoin('ts001_voti','ts001_voti.c_soc','=','ta001_soci.c_soc')->where('ta003_cdc.c_cdc','ilike',$key)->orWhere('ta003_cdc.t_sed','ilike', $key)->groupby("ta003_cdc.c_cdc","ta003_cdc.t_sed")->select(array("ta003_cdc.c_cdc","ta003_cdc.t_sed",DB::raw('count(distinct ta001_soci.c_soc) as totali'),DB::raw('getVotantiPerCDC('.$dataRif.',ta003_cdc.c_cdc) as votanti'),DB::raw('getAstenutiPerCDC('.$dataRif.',ta003_cdc.c_cdc) as astenuti')))->orderby("ta003_cdc.t_sed")->paginate(10);
+    }
 }

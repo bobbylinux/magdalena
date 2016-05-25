@@ -10,7 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends BaseModel implements AuthenticatableContract,
+class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
@@ -45,7 +45,7 @@ class User extends BaseModel implements AuthenticatableContract,
         'username' => 'required|unique:users|min:5|max:128',
         'password' => 'required|min:8|max:64',
         'conferma_password' => 'required|same:password',
-        'codice_socio' => 'required|unique:users|exists:ta001_soci,c_soc'
+        'codice_socio_user' => 'required|unique:users|exists:ta001_soci,c_soc'
     );
 
     /**
@@ -67,8 +67,15 @@ class User extends BaseModel implements AuthenticatableContract,
     public function store($data) {
         $this->username = $data['username'];
         $this->password = bcrypt($data['password']);
-        $this->admin = bcrypt($data['admin']);
-        $this->c_soc = bcrypt($data['codice_socio']);
+        $this->admin = $data['admin'];
+        $this->c_soc = $data['codice_socio'];
+        self::save();
+    }
+
+    public function edit($data) {
+        $this->username = $data['username'];
+        $this->admin = $data['admin'];
+        $this->c_soc = $data['codice_socio'];
         self::save();
     }
 }

@@ -11,8 +11,8 @@
                 <form class="form" action="{!! url('/soci') !!}" method="POST">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="form-group">
-                        <label for="codice_socio">Codice Socio</label>
-                        <input type="text" class="form-control" id="codice_socio" value="{!! Input::get('codice_socio') !!}" name="codice_socio" placeholder="Codice Socio">
+                        <label for="codice-socio">Codice Socio</label>
+                        <input type="text" class="form-control" id="codice-socio"  name="codice-socio" placeholder="Codice Socio">
                     </div>
                     @foreach($errors->get('codice_socio') as $message)
                         <div class="form-group">

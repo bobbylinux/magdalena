@@ -15,12 +15,12 @@ return [
 
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
-    'after'                => 'The :attribute must be a date after :date.',
+    'after'                => 'Il campo :attribute deve essere una data successiva a :date.',
     'alpha'                => 'The :attribute may only contain letters.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, and dashes.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
     'array'                => 'The :attribute must be an array.',
-    'before'               => 'The :attribute must be a date before :date.',
+    'before'                => 'Il campo :attribute deve essere una data precedente a :date.',
     'between'              => [
         'numeric' => 'The :attribute must be between :min and :max.',
         'file'    => 'The :attribute must be between :min and :max kilobytes.',
@@ -76,6 +76,8 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'Il :attribute esiste già nel database.',
     'url'                  => 'The :attribute format is invalid.',
+    'greater_than_field'   => 'Il :attribute deve essere maggiore di :field',
+    'lesser_than_field'   => 'Il :attribute deve essere minore di :field',
 
     /*
     |--------------------------------------------------------------------------
