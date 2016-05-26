@@ -1,4 +1,4 @@
-@extends('templates.front')
+@extends('templates.back')
 @section('content')
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2 text-center">
@@ -13,7 +13,7 @@
                       </span>
                 </div><!-- /input-group -->
             @else
-                <h1>LE VOTAZIONI SONO ATTUALMENTE CHIUSE</h1>
+                <h1>Non ci sono votazioni attive al momento</h1>
             @endif
         </div>
     </div>
@@ -24,20 +24,15 @@
             <button class="btn btn-success btn-block" id="conferma-voto" type="submit">Conferma</button>
         </div>
     </div>
-    @if (isset($dataRif))
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2 text-center">
             <h1>Lista dei candidati</h1>
             <table class="table table-bordered table-striped table-hover">
                 <tbody>
-                @foreach ($candidati as $socio)
-                    <tr><td>{!! ucfirst(strtolower($socio ->t_cgn)) .' '.ucfirst(strtolower($socio ->t_nom))!!}</td></tr>
-                @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-    @endif
     <!--modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="conferma-messaggio">
         <div class="modal-dialog">

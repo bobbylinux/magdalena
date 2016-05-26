@@ -46,6 +46,8 @@ $(document).ready( function() {
             })
             .error(function (data) {
                 $("#wait-msg").modal("hide");
+                $(".errore-testo").html("<p>Errore durante la cancellazione. Controllare i vincoli referenziali sul database</p>");
+                $("#errore-messaggio").modal("show");
             });
     });
 });

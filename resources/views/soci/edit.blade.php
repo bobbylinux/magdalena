@@ -78,6 +78,15 @@
                                     > Amministratore
                         </label>
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="attivo" name="attivo"
+                                   @if ($user['active'])
+                                   checked
+                                    @endif
+                                    > Utente Attivo
+                        </label>
+                    </div>
                     <button type="submit" class="btn btn-success btn-block">Salva</button>
                 </form>
             </div>

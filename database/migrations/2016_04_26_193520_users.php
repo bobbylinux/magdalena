@@ -16,6 +16,7 @@ class Users extends Migration {
             $table->string('username', 128)->unique(); //nome utente con standard email es: email@email.com
             $table->string('password', 64); //password che verrà crittografata secondo gestione di laravel
             $table->boolean('admin')->default(false);
+            $table->boolean('active')->default(true);
             $table->rememberToken();//set del token che permette di ricordare la sessione utente
             $table->string('c_soc',10);
             $table->timestamps();

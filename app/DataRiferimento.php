@@ -45,12 +45,12 @@ class DataRiferimento extends BaseModel
      */
     public function store($data)
     {
-        $this->d_rif_ini = $data['d_rif_ini'];
-        $this->d_rif_fin = $data['d_rif_fin'];
-        $this->t_des = $data['t_des'];
-        $this->n_vot_min = $data['n_vot_min'];
-        $this->n_vot_max = $data['n_vot_max'];
-        $this->f_att = $data['f_att'];
+        $this->d_rif_ini = $data['data_inizio'];
+        $this->d_rif_fin = $data['data_fine'];
+        $this->t_des = $data['descrizione'];
+        $this->n_vot_min = $data['numero_voti_minimo'];
+        $this->n_vot_max = $data['numero_voti_massimo'];
+        $this->f_att = $data['attivo'];
         self::save();
     }
 
@@ -61,12 +61,12 @@ class DataRiferimento extends BaseModel
      */
     public function edit($data)
     {
-        $this->d_rif_ini = $data['d_rif_ini'];
-        $this->d_rif_fin = $data['d_rif_fin'];
-        $this->t_des = $data['t_des'];
-        $this->n_vot_min = $data['n_vot_min'];
-        $this->n_vot_max = $data['n_vot_max'];
-        $this->f_att = $data['f_att'];
+        $this->d_rif_ini = $data['data_inizio'];
+        $this->d_rif_fin = $data['data_fine'];
+        $this->t_des = $data['descrizione'];
+        $this->n_vot_min = $data['numero_voti_minimo'];
+        $this->n_vot_max = $data['numero_voti_massimo'];
+        $this->f_att = $data['attivo'];
         $this->save();
     }
     /**
@@ -80,11 +80,16 @@ class DataRiferimento extends BaseModel
 
     public function getActiveDate() {
         $now = date('Y-m-d');
-        return $this->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)->first();
+        return $this->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)->where('f_att','=', 'S')->first();
+    }
 
+
+    public function getActiveDateList() {
+        $now = date('Y-m-d');
+        return $this->where('d_rif_ini','<=',$now)->where('d_rif_fin','>=',$now)->first();
     }
 
     public function getDateList() {
-        return $this->orderBy('d_rif_ini')->lists('d_rif_ini', 'c_rif')->all();
+        return $this->where('f_att','=', 'S')->orderBy('d_rif_ini')->lists('t_des', 'c_rif')->all();
     }
 }

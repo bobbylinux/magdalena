@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\DataRiferimento;
+use PhpSpec\Exception\Exception;
 
 class DateRiferimentoController extends Controller
 {
@@ -104,7 +105,31 @@ class DateRiferimentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        var_dump($request);
+        $attivo = 'N';
+
+        if (isset($request->attivo)) {
+            $attivo = 'S';
+        }
+
+        $dataInizio = date('Y-m-d', strtotime(str_replace('/', '-', $request->get('data-inizio'))));
+        $dataFine = date('Y-m-d', strtotime(str_replace('/', '-', $request->get('data-fine'))));
+        $data = array(
+            'data_inizio' => $dataInizio,
+            'data_fine' => $dataFine,
+            'descrizione' => $request->get('descrizione'),
+            'numero_voti_minimo' => $request->get('min-voti'),
+            'numero_voti_massimo' => $request->get('max-voti'),
+            'attivo' => $attivo
+        );
+
+        if (!$this->dataRiferimento->validate($data)->fails()) {
+            $dataRiferimento = $this->dataRiferimento->where('c_rif','=',$id)->first();
+            $dataRiferimento->edit($data);
+            return Redirect::action('DateRiferimentoController@index');
+        } else {
+            $errors = $this->dataRiferimento->getErrors();
+            return Redirect::action('DateRiferimentoController@edit', [$id])->withInput()->withErrors($errors);
+        }
 
     }
 
@@ -116,6 +141,17 @@ class DateRiferimentoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = array();
+        $return['errore'] = false;
+        $return['messaggio'] = "ok";
+        try {
+            $dataRiferimento = $this->dataRiferimento->where('c_rif','=',$id)->first();
+            $dataRiferimento->trash();
+        } catch (Exception $err) {
+            $return['errore'] = true;
+            $return['messaggio'] = $err->getMessage();
+        }
+
+        return json_encode($return);
     }
 }

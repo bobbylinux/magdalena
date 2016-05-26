@@ -14,22 +14,47 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="data-inizio" name="data-inizio" placeholder="Data di inizio" value="{!! date('d-m-Y', strtotime($dataRiferimento->d_rif_ini))!!}">
                     </div>
+                    @foreach($errors->get('data_inizio') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <div class="form-group">
                         <input type="text" class="form-control" id="data-fine" name="data-fine" placeholder="Data di fine" value="{!! date('d-m-Y', strtotime($dataRiferimento->d_rif_fin))!!}">
                     </div>
+                    @foreach($errors->get('data_fine') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <div class="form-group">
                         <input type="text" class="form-control" id="descrizione" name="descrizione" placeholder="Descrizione" value="{!! $dataRiferimento->t_des !!}">
                     </div>
+                    @foreach($errors->get('descrizione') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <div class="form-group">
                         <input type="number" class="form-control" id="min-voti" name="min-voti" placeholder="Numero minimo di voti" value="{!! $dataRiferimento->n_vot_min !!}">
                     </div>
+                    @foreach($errors->get('numero_voti_minimo') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <div class="form-group">
                         <input type="number" class="form-control" id="max-voti" name="max-voti" placeholder="Numero massimo di voti" value="{!! $dataRiferimento->n_vot_max !!}">
                     </div>
+                    @foreach($errors->get('numero_voti_massimo') as $message)
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">{!! $message !!}</div>
+                        </div>
+                    @endforeach
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="abilitato" @if ($dataRiferimento->f_att == 'S') checked @endif > Abilitato
+                                <input type="checkbox" name="attivo" @if ($dataRiferimento->f_att == 'S') checked @endif > Attivo
                             </label>
                         </div>
                     </div>

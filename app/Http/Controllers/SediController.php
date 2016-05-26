@@ -126,7 +126,7 @@ class SediController extends Controller
         try {
             $sede = $this->sede->where('c_sed','=',$id)->first();
             $sede->trash();
-        } catch (QueryException $err) {
+        } catch (Exception $err) {
             $return['errore'] = true;
             $return['messaggio'] = $err->getMessage();
         }

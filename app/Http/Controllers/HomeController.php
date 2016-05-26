@@ -30,17 +30,17 @@ class HomeController extends Controller
 
     public function showHome()
     {
-        $dataRif = $this->dataRiferimento->getActiveDate();
+
+        $dataRiferimento = $this->dataRiferimento->getActiveDate();
+
         $candidati = $this->socio->getSociCandidati();
         if (Auth::check()) {
             //controllo se ha già votato
             $codiceSocio = Auth::user()->c_soc;
-            $dataRif = $dataRif->c_rif;
-            if (count($this->voto->getVotiPerSocio($codiceSocio,$dataRif)) == 0){
-                return view('index', compact("dataRif", "candidati"));
-            } else {
-                return view('esito');
+            if (!is_null($dataRiferimento) && count($this->voto->getVotiPerSocio($codiceSocio, $dataRiferimento->c_rif)) == 0) {
+                $dataRif = $dataRiferimento->c_rif;
             }
+            return view('index', compact("dataRif", "candidati"));
         } else {
             return view('auth.login');
         }
@@ -51,16 +51,8 @@ class HomeController extends Controller
 
     public function showDashboard()
     {
-        //devo prende le informazioni dell'utente
-        if (Auth::check()) {
-            if (Auth::user()->admin) {
-                $socio = $this->socio->getSocioInfo(Auth::user()->c_soc);
-                return view('dashboard', compact('socio'));
-            }
-            return $this->showHome();
-        }
-
-        return view('users.login');
+        $socio = $this->socio->getSocioInfo(Auth::user()->c_soc);
+        return view('dashboard', compact('socio'));
 
     }
 

@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-xs-10 col-xs-offset-1">
                 <form class="form" action="{!! url('/soci/search') !!}" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" id="ricerca-socio" name="ricerca-socio" placeholder="Ricerca Socio...">
@@ -20,13 +20,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-xs-10 col-xs-offset-1">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th class="col-lg-2">Codice Badge</th>
-                        <th class="col-lg-3">Cognome</th>
-                        <th class="col-lg-3">Nome</th>
+                        <th class="col-lg-2">Cognome</th>
+                        <th class="col-lg-2">Nome</th>
+                        <th class="col-lg-2">Username</th>
                         <th class="col-lg-4 text-center"></th>
                     </tr>
                     </thead>
@@ -36,10 +37,13 @@
                             <td>{!! $socio->c_bdg !!}</td>
                             <td>{!! $socio->t_cgn !!}</td>
                             <td>{!! $socio->t_nom !!}</td>
+                            <td>{!! $socio->username !!}</td>
                             <td class="text-right">
-                                <a class="btn btn-primary" href="{!! url('/soci/' . $socio->c_soc . '/edit') !!}"><i
+                                <a class="btn btn-success btn-sm" href="{!! url('/soci/password/' . $socio->c_soc) !!}"><i
+                                            class="fa fa-key"></i> Cambio Pwd</a>
+                                <a class="btn btn-primary btn-sm" href="{!! url('/soci/' . $socio->c_soc . '/edit') !!}"><i
                                             class="fa fa-pencil"></i> Modifica</a>
-                                <a class="btn btn-danger btn-cancella" data-id="{!! $socio->c_soc !!}" data-anagrafica="soci"><i class="fa fa-trash"></i> Cancella</a>
+                                <a class="btn btn-danger btn-sm btn-cancella" data-id="{!! $socio->c_soc !!}" data-anagrafica="soci"><i class="fa fa-trash"></i> Cancella</a>
                             </td>
                         </tr>
                     @endforeach
@@ -48,12 +52,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
+            <div class="col-xs-10 col-xs-offset-1 text-center">
                 {!! $soci->render()  !!}
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-xs-10 col-xs-offset-1">
                 <a href="{!! url('/soci/create') !!}" class="btn btn-success btn-block">Nuovo Socio</a>
             </div>
         </div>

@@ -12,7 +12,7 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="form-group">
                         <label for="codice-socio">Codice Socio</label>
-                        <input type="text" class="form-control" id="codice-socio"  name="codice-socio" placeholder="Codice Socio">
+                        {!! Form::text('codice-socio', null, ['class' => 'form-control', 'id' => 'codice-socio', 'placeholder' => 'Codice Socio']) !!}
                     </div>
                     @foreach($errors->get('codice_socio') as $message)
                         <div class="form-group">
@@ -21,7 +21,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="codice-badge">Codice Badge</label>
-                        <input type="text" class="form-control" id="codice-badge" name="codice-badge" placeholder="Codice Badge">
+                        {!! Form::text('codice-badge', null, ['class' => 'form-control', 'id' => 'codice-badge', 'placeholder' => 'Codice Badge']) !!}
                     </div>
                     @foreach($errors->get('codice_badge') as $message)
                         <div class="form-group">
@@ -30,7 +30,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="cognome">Cognome</label>
-                        <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Cognome">
+                        {!! Form::text('cognome', null, ['class' => 'form-control', 'id' => 'cognome', 'placeholder' => 'Cognome']) !!}
                     </div>
                     @foreach($errors->get('cognome') as $message)
                         <div class="form-group">
@@ -39,7 +39,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                        {!! Form::text('nome', null, ['class' => 'form-control', 'id' => 'nome', 'placeholder' => 'Nome']) !!}
                     </div>
                     @foreach($errors->get('nome') as $message)
                         <div class="form-group">
@@ -66,7 +66,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                        {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'username', 'placeholder' => 'Username']) !!}
                     </div>
                     @foreach($errors->get('username') as $message)
                         <div class="form-group">
@@ -75,7 +75,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password"  name="password" placeholder="Password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
                     @foreach($errors->get('password') as $message)
                         <div class="form-group">
@@ -94,6 +94,11 @@
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" id="amministratore" name="amministratore"> Amministratore
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="attivo" name="attivo"> Utente Attivo
                         </label>
                     </div>
                     <button type="submit" class="btn btn-success btn-block">Salva</button>

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class AdminMiddleware
+class UtenteAdmin
 {
     /**
      * The Guard implementation.
@@ -15,7 +15,7 @@ class AdminMiddleware
     protected $auth;
 
     /**
-     * Create a new middleware instance.
+     * Create a new filter instance.
      *
      * @param  Guard $auth
      * @return void
@@ -34,23 +34,11 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
-            }
+
+        if ($this->auth->check() && $this->auth->user()->admin) {
+            return $next($request);
         }
 
-        if (!$this->auth->user()->admin) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('index');
-            }
-        }
-
-
-        return $next($request);
+        return redirect('/');
     }
 }

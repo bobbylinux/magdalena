@@ -82,22 +82,24 @@ class AuthController extends Controller
         $user = User::where('username', '=', $request->username)->first();
 
         if (isset($user)) {
-            if ($user->password == md5($request->password)) { // If their password is still MD5
-                $user->password = bcrypt($request->password); // Convert to new format
-                $user->save();
-            }
+
             $remember = (null !== $request->get("remember-me")) ? true : false;
             if ($this->auth->attempt($request->only('username', 'password'), $remember)) {
-                if ($request->ajax()) {
-                    return Response::json(array(
-                        'code' => '200', //OK
-                        'msg' => 'OK'));
-                } else if ($this->auth->user()->admin == true) {
-                    return redirect('dashboard');
+                if ($this->auth->user()->active) {
+                    if ($request->ajax()) {
+                        return Response::json(array(
+                            'code' => '200', //OK
+                            'msg' => 'OK'));
+                    } else if ($this->auth->user()->admin == true) {
+                        return redirect('dashboard');
 
+                    } else {
+                        return redirect('/');
+                    }
                 } else {
-                    return redirect('/');
+                    $this->auth->logout();
                 }
+
             }
         }
 
@@ -107,9 +109,9 @@ class AuthController extends Controller
                 'code' => '500', //OK
                 'msg' => $this->getFailedLoginMessage()));
         } else {
-            return redirect('/login')->withErrors([
-                'username' => $this->getFailedLoginMessage()
-            ]);
+            $errors['username'] = $this->getFailedLoginMessage();
+
+            return redirect('/login')->withErrors($errors);
         }
     }
 
@@ -132,41 +134,7 @@ class AuthController extends Controller
      */
     protected function getFailedLoginMessage()
     {
-        return Lang::has('auth.failed') ? Lang::get('auth.failed') : 'These credentials do not match our records.';
-    }
-
-    /**
-     * Confirm the registration procedure through a code control
-     *
-     * @return \Illuminate\View\View
-     *
-     */
-    public function verifyUser($code)
-    {
-        if (!$code) {
-            $data['errore'] = true;
-            $data['titolo'] = Lang::choice("messages.errore", 0);
-            $data['conferma'] = Lang::choice('messages.errore_signin', 0);
-            return view('auth.confirm', $data);
-        }
-
-        $user = $this->user->where('codice_conferma', '=', $code)->first();
-
-        if (!$user) {
-            $data['errore'] = true;
-            $data['titolo'] = Lang::choice("messages.errore", 0);
-            $data['conferma'] = Lang::choice('messages.errore_signin', 0);
-            return view('auth.confirm', $data);
-        } else {
-
-            $user->confermato = true;
-            $user->codice_conferma = null;
-            $user->save();
-            $data['conferma'] = Lang::choice('messages.conferma_testo', 0);
-            $data['errore'] = false;
-            $data['titolo'] = Lang::choice('messages.conferma_titolo', 0);
-            return view('auth.confirm', $data);
-        }
+        return 'Nome utente o password non validi';
     }
 
     /**
@@ -186,10 +154,21 @@ class AuthController extends Controller
      * @return \Illuminate\View\View
      *
      */
+    public function getResetPassword()
+    {
+        return view('password.reset');
+    }
+
+    /**
+     * Change your password submit
+     *
+     * @return \Illuminate\View\View
+     *
+     */
     public function postPassword(Request $request)
     {
         $data = array(
-            'email' => $request->get('email'),
+            'username' => $request->get('username'),
             'password' => $request->get('password'),
             'password_c' => $request->get('password_c')
         );

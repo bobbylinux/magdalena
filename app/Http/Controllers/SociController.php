@@ -16,6 +16,8 @@ use App\DataRiferimento;
 use App\Http\Controllers\Controller;
 use App\Socio;
 use App\User;
+use App\Candidato;
+use App\Voto;
 
 class SociController extends Controller
 {
@@ -25,6 +27,8 @@ class SociController extends Controller
     protected $sede;
     protected $cdc;
     protected $data;
+    protected $candidato;
+    protected $voto;
 
     /**
      * Constructor for Dipendency Injection
@@ -32,13 +36,16 @@ class SociController extends Controller
      * @return none
      *
      */
-    public function __construct(Socio $socio, User $user, Sede $sede, CentroDiCosto $cdc, DataRiferimento $data)
+    public function __construct(Socio $socio, User $user, Sede $sede, CentroDiCosto $cdc, DataRiferimento $data, Voto $voto, Candidato $candidato)
     {
         $this->socio = $socio;
         $this->user = $user;
         $this->sede = $sede;
         $this->cdc = $cdc;
         $this->data = $data;
+        $this->voto = $voto;
+        $this->candidato = $candidato;
+
     }
 
     /**
@@ -48,7 +55,8 @@ class SociController extends Controller
      */
     public function index()
     {
-        $soci = $this->socio->orderby("t_cgn", "asc")->orderby("t_nom", "asc")->paginate(10);
+        $soci = $this->socio->join('users','users.c_soc','=','ta001_soci.c_soc')->orderby("t_cgn", "asc")->orderby("t_nom", "asc")->paginate(10);
+
         return view('soci.index', compact('soci'));
     }
 
@@ -78,6 +86,13 @@ class SociController extends Controller
         } else {
             $admin = false;
         }
+
+        if (isset($request->attivo)) {
+            $active = true;
+        } else {
+            $active = false;
+        }
+
         $data = array(
             'codice_socio' => $request->get('codice-socio'),
             'codice_badge' => $request->get('codice-badge'),
@@ -88,7 +103,8 @@ class SociController extends Controller
             'username' => $request->get('username'),
             'password' => $request->get('password'),
             'conferma_password' => $request->get('conferma-password'),
-            'admin' => $admin
+            'admin' => $admin,
+            'active' => $active
         );
 
 
@@ -142,6 +158,13 @@ class SociController extends Controller
         } else {
             $admin = false;
         }
+
+        if (isset($request->attivo)) {
+            $active = true;
+        } else {
+            $active = false;
+        }
+
         $data = array(
             'codice_socio' => $request->get('codice-socio'),
             'codice_badge' => $request->get('codice-badge'),
@@ -152,7 +175,8 @@ class SociController extends Controller
             'username' => $request->get('username'),
             'password' => $request->get('password'),
             'conferma_password' => $request->get('conferma-password'),
-            'admin' => $admin
+            'admin' => $admin,
+            'active' => $active
         );
 
         $user = $this->user->where('c_soc','=',$id)->first();
@@ -181,7 +205,29 @@ class SociController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $return = array();
+        $return['errore'] = false;
+        $return['messaggio'] = "ok";
+
+        try {
+            $candidato = $this->candidato->where('c_soc','=',$id)->count();
+            $voto = $this->voto->where('c_soc','=',$id)->orWhere('c_soc_vot','=',$id)->count();
+
+            if ($candidato == 0 && $voto == 0) {
+                $user = $this->user->where('c_soc','=',$id)->first();
+                $user->trash();
+                $socio = $this->socio->where('c_soc','=',$id)->first();
+                $socio->trash();
+            } else {
+                throw new \Exception('Impossibile cancellare il socio poichè presente un vincolo referenziale nel database voti e/o candidati.');
+            }
+
+        } catch (Exception $err) {
+            $return['errore'] = true;
+            $return['messaggio'] = $err->getMessage();
+        }
+
+        return json_encode($return);
     }
 
     /**
@@ -207,7 +253,33 @@ class SociController extends Controller
 
     public function searchSocio(Request $request) {
         $key = '%'.trim(strtolower($request->get('ricerca-socio'))).'%';
-        $soci = $this->socio->where('c_bdg','ilike', $key)->orWhere('t_cgn','ilike', $key)->orWhere('t_nom','ilike', $key)->orderby("t_cgn", "asc")->orderby("t_nom", "asc")->paginate(10);
+        $soci = $this->socio->join('users','ta001_soci.c_soc','=','users.c_soc')->where('username','ilike',$key)->orWhere('c_bdg','ilike', $key)->orWhere('t_cgn','ilike', $key)->orWhere('t_nom','ilike', $key)->orderby("t_cgn", "asc")->orderby("t_nom", "asc")->paginate(10);
         return view('soci.index', compact('soci'));
+    }
+
+    public function resetPassword($id) {
+        $user = $this->user->where('c_soc','=',$id)->first();
+        return view('password.reset',compact('user'));
+    }
+
+    public function setPassword(Request $request) {
+        if (isset($request->id)) {
+            $data = array (
+                'password' => $request->get('password'),
+                'conferma_password' => $request->get('conferma_password')
+            );
+            if (!$this->socio->validate($data, $this->socio->rulesPassword)->fails()) {
+                $user = $this->user->find($request->get('id'));
+                $user->password = bcrypt($request->get('password'));
+                $user->save();
+                return Redirect::action('SociController@index');
+            }
+
+            return Redirect::action('SociController@resetPassword', [$request->c_soc])->withInput()->withErrors($this->socio->getErrors());
+
+        }
+
+
+        return Redirect::action('SociController@index');
     }
 }

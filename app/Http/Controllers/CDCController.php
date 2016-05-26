@@ -129,7 +129,7 @@ class CDCController extends Controller
         try {
             $cdc = $this->centroDiCosto->where('c_cdc','=',$id)->first();
             $cdc->trash();
-        } catch (QueryException $err) {
+        } catch (Exception $err) {
             $return['errore'] = true;
             $return['messaggio'] = $err->getMessage();
         }

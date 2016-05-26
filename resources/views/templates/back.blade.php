@@ -33,9 +33,6 @@
                 </a>
             </li>
             <li>
-                <a href="{!! url('/password') !!}"><i class="fa fa-key"></i> Cambio Password</a>
-            </li>
-            <li>
                 <a href="{!! url('/candidati') !!}"><i class="fa fa-map-o"></i> Gestione Candidati</a>
             </li>
             <li>

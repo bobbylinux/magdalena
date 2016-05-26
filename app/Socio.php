@@ -44,6 +44,11 @@ class Socio extends BaseModel  {
         'codice_cdc' => 'required|exists:ta003_cdc,c_cdc'
     );
 
+    public $rulesPassword = array(
+        'password' => 'required|min:8|max:64',
+        'conferma_password' => 'required|min:8|max:64|same:password'
+    );
+
     /**
      * The variable for validation rules
      *

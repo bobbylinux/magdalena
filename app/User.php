@@ -69,6 +69,7 @@ class User extends Model implements AuthenticatableContract,
         $this->password = bcrypt($data['password']);
         $this->admin = $data['admin'];
         $this->c_soc = $data['codice_socio'];
+        $this->active = $data['active'];
         self::save();
     }
 
@@ -76,6 +77,11 @@ class User extends Model implements AuthenticatableContract,
         $this->username = $data['username'];
         $this->admin = $data['admin'];
         $this->c_soc = $data['codice_socio'];
-        self::save();
+        $this->active = $data['active'];
+        $this->save();
+    }
+
+    public function trash() {
+        $this->delete();
     }
 }
