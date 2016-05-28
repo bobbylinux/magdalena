@@ -25,6 +25,8 @@ Route::group(array('middleware' => 'auth.admin'), function () {
     Route::get('soci/password/{id}', 'SociController@resetPassword');
     Route::post('soci/password', 'SociController@setPassword');
     Route::get('soci/search', 'SociController@searchSocio');
+    Route::get('soci/lista', 'SociController@getListaSoci');
+    Route::get('candidati/tabella', 'CandidatiController@getTabellaCandidati');
     Route::get('cdc/search', 'CDCController@searchCDC');
     Route::get('voti/votanti_cdc/search', 'VotiController@searchVotantiCDC');
 

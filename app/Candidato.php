@@ -26,4 +26,8 @@ class Candidato extends BaseModel
         $this->delete();
     }
 
+    public function getCandidati($c_rif) {
+        return $this->join('ta001_soci','ta001_soci.c_soc','=','ts004_candidati.c_soc')->where('c_rif','=',$c_rif)->orderby('t_cgn','asc')->orderby('t_nom','asc')->get();
+    }
+
 }

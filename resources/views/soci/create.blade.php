@@ -48,7 +48,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="cdc">Centro di costo</label>
-                        {!! Form::select('cdc', array('0' => 'CDC') + $cdc,'' ,array('class'=>'form-control','id'=>'cdc','name' => 'cdc')) !!}
+                        {!! Form::select('cdc', array('0' => 'CDC') + $cdc,'' ,array('class'=>'form-control','id'=>'cdc')) !!}
                     </div>
                     @foreach($errors->get('codice_cdc') as $message)
                         <div class="form-group">
@@ -57,7 +57,7 @@
                     @endforeach
                     <div class="form-group">
                         <label for="sede">Sede</label>
-                        {!! Form::select('sede', array('0' => 'Sede') + $sedi,'' ,array('class'=>'form-control','id'=>'sede', 'name' => 'sede')) !!}
+                        {!! Form::select('sede', array('0' => 'Sede') + $sedi,'' ,array('class'=>'form-control','id'=>'sede')) !!}
                     </div>
                     @foreach($errors->get('codice_sede') as $message)
                         <div class="form-group">

@@ -246,7 +246,7 @@ class SociController extends Controller
         $result = $this->socio->getSociCandidati();
         $return_array[] = array();
         foreach ($result as $data) {
-            $return_array[] = array('label' => $data->t_cgn . " " . $data->t_nom, 'value' => $data->t_cgn . " " . $data->t_nom, 'id' => $data->c_soc);
+            $return_array[] = array('label' => $data->t_cgn . " " . $data->t_nom . " - Codice Badge: " . $data->c_bdg, 'value' => $data->t_cgn . " " . $data->t_nom, 'id' => $data->c_soc);
         }
         return json_encode($return_array);
     }
@@ -255,6 +255,15 @@ class SociController extends Controller
         $key = '%'.trim(strtolower($request->get('ricerca-socio'))).'%';
         $soci = $this->socio->join('users','ta001_soci.c_soc','=','users.c_soc')->where('username','ilike',$key)->orWhere('c_bdg','ilike', $key)->orWhere('t_cgn','ilike', $key)->orWhere('t_nom','ilike', $key)->orderby("t_cgn", "asc")->orderby("t_nom", "asc")->paginate(10);
         return view('soci.index', compact('soci'));
+    }
+
+    public function getListaSoci() {
+        $listaSoci = $this->socio->getListaSoci();
+        $return_array[] = array();
+        foreach ($listaSoci as $data) {
+            $return_array[] = array('label' => $data->t_cgn . " " . $data->t_nom . " - Codice Badge: " . $data->c_bdg, 'value' => $data->t_cgn . " " . $data->t_nom, 'id' => $data->c_soc);
+        }
+        return json_encode($return_array);
     }
 
     public function resetPassword($id) {

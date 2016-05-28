@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="{!! url('css/bootstrap.min.css') !!}" rel="stylesheet">
+    <link href="{!! url('css/custom-theme/jquery-ui-1.10.0.custom.css') !!}" rel="stylesheet">
     <link href="{!! url('css/styles.css') !!}" rel="stylesheet">
 
     <!-- Font-Awesome-->

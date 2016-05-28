@@ -13,11 +13,11 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="form-group" style="display: none">
                         <label for="codice-socio">Codice Socio</label>
-                        <input type="text" class="form-control" value="{!! $socio['c_soc'] !!}" id="codice-socio" name="codice-socio" placeholder="Codice Socio">
+                        {!! Form::text('codice-socio', $socio['c_soc'] , ['class' => 'form-control', 'id' => 'codice-socio', 'placeholder' => 'Codice Socio']) !!}
                     </div>
                     <div class="form-group">
                         <label for="codice-badge">Codice Badge</label>
-                        <input type="text" class="form-control" value="{!! $socio['c_bdg'] !!}" id="codice-badge" name="codice-badge" placeholder="Codice Badge">
+                        {!! Form::text('codice-badge', $socio['c_bdg'], ['class' => 'form-control', 'id' => 'codice-badge', 'placeholder' => 'Codice Badge']) !!}
                     </div>
                     @foreach($errors->get('codice_badge') as $message)
                         <div class="form-group">

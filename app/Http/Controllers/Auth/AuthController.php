@@ -159,41 +159,4 @@ class AuthController extends Controller
         return view('password.reset');
     }
 
-    /**
-     * Change your password submit
-     *
-     * @return \Illuminate\View\View
-     *
-     */
-    public function postPassword(Request $request)
-    {
-        $data = array(
-            'username' => $request->get('username'),
-            'password' => $request->get('password'),
-            'password_c' => $request->get('password_c')
-        );
-
-        //validate user
-        $validatorUser = $this->user->validate($data, $this->user->passwordChangeRules);
-        if ($validatorUser->fails()) {
-            $errors = $this->user->getErrors();
-            return Redirect::action('Auth\AuthController@getPassword')->withInput()->withErrors($errors);
-        }
-        //se validato devo aggiornare il db
-        $user = $this->user->where('username', '=', $data['email'])->first();
-
-        $codice = str_random(30);
-
-        $data['codice'] = $codice;
-
-        $user->password($data);
-
-        //invio mail di conferma
-        Mail::send('email.password', ['codice' => $codice, 'user' => $user], function ($message) use ($user, $codice) {
-            $message->to($user->username, $user->username)
-                ->subject('Conferma cambio password');
-        });
-        //ritorno alla home page
-        return redirect('/');
-    }
 }

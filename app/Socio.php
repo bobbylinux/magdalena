@@ -121,7 +121,11 @@ class Socio extends BaseModel  {
     }
 
     public function getSociCandidati() {
-        return ($this->join('ts004_candidati','ts004_candidati.c_soc','=','ta001_soci.c_soc')->select('ta001_soci.t_nom','ta001_soci.t_cgn','ta001_soci.c_soc')->orderBy('t_cgn','asc')->orderBy('t_nom','asc')->get());
+        return ($this->join('ts004_candidati','ts004_candidati.c_soc','=','ta001_soci.c_soc')->select('ta001_soci.t_nom','ta001_soci.t_cgn','ta001_soci.c_soc','ta001_soci.c_bdg')->orderBy('t_cgn','asc')->orderBy('t_nom','asc')->get());
+    }
+
+    public function getListaSoci() {
+        return ($this->join('users','ta001_soci.c_soc','=','users.c_soc')->where('users.active','=',true)->orderBy('t_cgn','asc')->orderBy('t_nom','asc')->get());
     }
 
     public function getSocioInfo($cod_socio) {

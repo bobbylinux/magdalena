@@ -25,6 +25,10 @@ $(document).ready(function () {
 
     $(document).on("click", "#aggiungi-socio", function () {
 
+        if (trim($("#ricerca-socio").val()) == "" || $("#ricerca-socio").val() == null) {
+            return;
+        }
+
         $("#wait-msg").modal("show");
         // process the form
         var $voti = new Array();

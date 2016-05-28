@@ -3,35 +3,28 @@
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2 text-center">
             @if (isset($dataRif))
-                <h1>{!! $dataRif['t_des'] !!}</h1>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="ricerca-socio" placeholder="Ricerca candidato..."
-                           data-id="">
-                      <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" id="aggiungi-socio"><span
-                                    class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </span>
-                </div><!-- /input-group -->
+                <div class="row">
+                    <div class="form-group">
+                        {!! Form::select('cdc', array('0' => 'Seleziona una votazione attiva') + $dataRif,'' ,array('class'=>'form-control','id'=>'select-votazioni-attive')) !!}
+                    </div>
+                </div>
+                <div class="row div-candidato-ricerca" style="display:none">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="ricerca-candidato"
+                               placeholder="Ricerca socio..."
+                               data-id="">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button" id="aggiungi-candidato"  data-token="{!! csrf_token() !!}"><span
+                                                class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                                  </span>
+                    </div>
+                </div>
             @else
                 <h1>Non ci sono votazioni attive al momento</h1>
             @endif
         </div>
     </div>
-    <div class="row" id="voti-container">
-    </div>
-    <div class="row" id="conferma-container">
-        <div class="col-xs-8 col-xs-offset-2 text-center">
-            <button class="btn btn-success btn-block" id="conferma-voto" type="submit">Conferma</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-2 text-center">
-            <h1>Lista dei candidati</h1>
-            <table class="table table-bordered table-striped table-hover">
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+    <div class="row" id="lista-candidati-container">
     </div>
     <!--modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="conferma-messaggio">
