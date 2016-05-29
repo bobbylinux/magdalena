@@ -1,6 +1,7 @@
 @extends('templates.back')
 @section('content')
     <div class="container-fluid">
+        @if (count($classifica) > 0)
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h1>CLASSIFICA {!! strtoupper($dataRif->t_des) !!} </h1>
@@ -35,6 +36,18 @@
                 {!! $classifica->render()  !!}
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <a href="{!! url('/voti/classifica/stampa/'. $dataRif->c_rif) !!}" class="btn btn-success btn-block">Stampa</a>
+            </div>
+        </div>
+        @else
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>ANCORA NESSUN VOTO PER {!! strtoupper($dataRif->t_des) !!}</h1>
+            </div>
+        </div>
+        @endif
     </div>
     <!-- modal wait-->
     <div class="modal fade" tabindex="-1" role="dialog" id="wait-msg">

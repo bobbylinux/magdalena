@@ -146,7 +146,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         /*HTML 5 FORM*/
         Collective\Html\HtmlServiceProvider::class,
-
+        /*PDF*/
+        Vsmoraes\Pdf\PdfServiceProvider::class
     ],
 
     /*
@@ -196,7 +197,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
-
+        'PDF'       => Vsmoraes\Pdf\PdfFacade::class
     ],
 
 ];

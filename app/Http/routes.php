@@ -19,6 +19,7 @@ Route::group(array('middleware' => 'auth'), function () {
 Route::group(array('middleware' => 'auth.admin'), function () {
     Route::get('/dashboard', array('uses' => 'HomeController@showDashboard'));
     Route::get('voti/votanti/{id}', array('uses' => 'VotiController@votanti'));
+    Route::get('voti/votanti/stampa/{id}', array('uses' => 'VotiController@stampaVotanti'));
     Route::get('voti/votanti/sede/{id}', array('uses' => 'VotiController@votantiSede'));
     Route::get('voti/votanti/cdc/{id}', array('uses' => 'VotiController@votantiCDC'));
     Route::get('voti/classifica/{id}', array('uses' => 'VotiController@classifica'));

@@ -51,6 +51,11 @@
                 {!! $votanti->render()  !!}
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <a href="{!! url('/voti/votanti/cdc/stampa/pdf') !!}" class="btn btn-success btn-block">Stampa</a>
+            </div>
+        </div>
     </div>
     <!-- modal wait-->
     <div class="modal fade" tabindex="-1" role="dialog" id="wait-msg">

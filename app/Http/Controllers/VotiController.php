@@ -10,13 +10,16 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Voto;
 use App\DataRiferimento;
+use Vsmoraes\Pdf\Pdf;
 
 class VotiController extends Controller
 {
 
-    protected $voto;
+    private $voto;
 
-    protected $dataRiferimento;
+    private $dataRiferimento;
+
+    private $pdf;
 
     /**
      * Constructor for Dipendency Injection
@@ -24,10 +27,11 @@ class VotiController extends Controller
      * @return none
      *
      */
-    public function __construct(Voto $voto, DataRiferimento $dataRiferimento)
+    public function __construct(Voto $voto, DataRiferimento $dataRiferimento, PDF $pdf)
     {
         $this->voto = $voto;
         $this->dataRiferimento = $dataRiferimento;
+        $this->pdf = $pdf;
     }
 
     private function getVotoIstance()
@@ -133,6 +137,22 @@ class VotiController extends Controller
         $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
         $votanti = $this->voto->searchVotantiPerCDC($id, $key);
         return view('voti.votanti_cdc', compact("votanti","dataRif"));
+    }
+
+    public function stampaVotanti($id) {
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $votanti = $this->voto->getVotanti($id);
+        $html = view('reports.votanti',compact('dataRif','votanti'))->render();
+        return $this->pdf
+            ->load($html)->filename('/temp/example1.pdf')->output();
+
+
+    }
+
+    public function visualizzaReportVotanti($id) {
+        $dataRif = $this->dataRiferimento->where('c_rif','=',$id)->first();
+        $votanti = $this->voto->getVotanti($id);
+        return view('reports.votanti', compact("votanti","dataRif"));
     }
 
 }
